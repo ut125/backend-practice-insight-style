@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Select & Edit Content</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/content.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- 標準頁首 -->
+<div class="top-container">
+    <header class="header">
+        <div class="header__logo">
+            <a href="https://insightm.co.uk" title="Insights Media">
+                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo-small.png" alt="Insights Media">
+            </a>
+        </div>
+        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<div id="page-container">
+    <!-- ===== SELECTION VIEW (Default) ===== -->
+    <div id="selection-view">
+        <main class="content-wrapper">
+            <button class="btn-primary back-btn" onclick="history.back()">Back</button>
+            <h2 class="view-title">Select Content Type</h2>
+            <div class="divider"></div>
+            <div class="toolbar">
+                <div class="custom-select" id="content-type-select">
+                    <div class="select-selected article"><span>Summary article</span><img src="../image/Dropdown_1.png" class="dropdown-arrow" alt="v"></div>
+                    <div class="select-items select-hide">
+                        <div data-value="summary">Summary article</div>
+                        <div data-value="press">Press release</div>
+                        <div class="coming-soon">PDF deck / Visual cards (coming soon)</div>
+                        <div class="coming-soon">Presentation (PPT) (coming soon)</div>
+                        <div class="coming-soon">Podcast / Audio summary (coming soon)</div>
+                        <div class="coming-soon">Video summary (coming soon)</div>
+                    </div>
+                </div>
+                <div class="version-toggle">
+                    <button id="version-a-btn" class="btn-primary version-btn" data-version="A">A-Version</button>
+                    <button id="version-b-btn" class="btn-primary version-btn" data-version="B">B-Version</button>
+                </div>
+            </div>
+            <div class="content-display-wrapper">
+                <span id="version-watermark" class="version-watermark"></span>
+                <div id="content-text-display" class="content-text"></div>
+                <button class="edit-icon" id="edit-btn" title="Edit Content"></button>
+            </div>
+            <button class="btn-primary continue-btn" id="continue-to-share">Continue</button>
+        </main>
+    </div>
+
+    <!-- ===== EDITING VIEW (Hidden by default) ===== -->
+    <div id="editing-view">
+        <main class="content-wrapper edit-mode">
+            <div class="editor-main-panel">
+                <div class="editor-container">
+                    <div class="rte-toolbar">
+                        <div class="tool-group">
+                            <button class="tool-btn" id="tool-undo" title="Undo"></button>
+                            <button class="tool-btn" id="tool-redo" title="Redo"></button>
+                        </div>
+                        <div class="divider-vertical"></div>
+                        <div class="tool-group">
+                            <div class="custom-select font-select" id="font-select">
+                                <div class="select-selected"><span>Arial</span><img src="../image/Dropdown_1.png" class="dropdown-arrow" alt="v"></div>
+                            </div>
+                        </div>
+                        <div class="divider-vertical"></div>
+                        <div class="tool-group font-size-group">
+                            <button class="tool-btn size-btn" id="size-decrease">-</button>
+                            <input type="text" class="size-input" id="size-input" value="16" />
+                            <button class="tool-btn size-btn" id="size-increase">+</button>
+                        </div>
+                        <div class="divider-vertical"></div>
+                        <div class="tool-group">
+                            <button class="tool-btn" id="tool-bold" title="Bold"></button>
+                            <button class="tool-btn" id="tool-italic" title="Italic"></button>
+                            <button class="tool-btn" id="tool-underline" title="Underline"></button>
+                            <div class="tool-palette-container">
+                                <button class="tool-btn color-indicator-btn" id="tool-color" title="Text Color"><div class="color-indicator" id="color-indicator-bar"></div></button>
+                                <div class="tool-palette color-palette select-hide" id="color-palette"></div>
+                            </div>
+                            <div class="tool-palette-container">
+                                <button class="tool-btn color-indicator-btn" id="tool-highlight" title="Highlight Color"><div class="color-indicator" id="highlight-indicator-bar"></div></button>
+                                <div class="tool-palette color-palette select-hide" id="highlight-palette"></div>
+                            </div>
+                        </div>
+                        <div class="divider-vertical"></div>
+                        <div class="tool-group">
+                            <div class="tool-palette-container">
+                                <button class="tool-btn" id="tool-align" title="Align"></button>
+                                <div class="tool-palette align-menu select-hide" id="align-menu">
+                                    <button class="tool-btn" data-align="justifyLeft" id="align-left"></button>
+                                    <button class="tool-btn" data-align="justifyCenter" id="align-center"></button>
+                                    <button class="tool-btn" data-align="justifyRight" id="align-right"></button>
+                                </div>
+                            </div>
+                            <button class="tool-btn" id="tool-spacing" title="Line Spacing"></button>
+                            <button class="tool-btn" id="tool-list" title="Bulleted List"></button>
+                        </div>
+                        <div class="divider-vertical"></div>
+                        <div class="tool-group">
+                            <button class="tool-btn" id="picture-tool-btn" title="Insert Picture"></button>
+                        </div>
+                        <div class="tool-group ai-tool-group">
+                            <div class="ai-select">
+                                <button class="tool-btn ai-btn" id="ai-tool-btn" title="AI Tools"></button>
+                                <div class="select-items ai-menu select-hide" id="ai-menu">
+                                    <div data-action="rewrite"><img src="../image/Rewrite_1.png" alt=""> Rewrite with AI</div>
+                                    <div data-action="shorten"><img src="../image/Shorten_1.png" alt=""> Shorten</div>
+                                    <div data-action="expand"><img src="../image/Expand_1.png" alt=""> Expand</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="editable-content" class="content-text" contenteditable="true"></div>
+                </div>
+            </div>
+            <aside class="picture-panel" id="picture-panel">
+                <div class="panel-header">
+                    <h4><img src="../image/Image_1.png" alt=""> Picture</h4>
+                    <button class="close-panel-btn" id="close-picture-panel">×</button>
+                </div>
+                <label for="picture-source-select">Picture Source</label>
+                <div class="custom-select picture-source-select" id="picture-source-select">
+                    <div class="select-selected"><span><img src="../image/ai_image_icon.png" alt=""> AI Image</span><img src="../image/Dropdown_1.png" alt="v" class="dropdown-arrow"></div>
+                    <div class="select-items select-hide">
+                        <div data-value="auto"><img src="../image/auto_icon.png" alt=""> Auto</div>
+                        <div data-value="stock"><img src="../image/stock_icon.png" alt=""> Stock Photo</div>
+                        <div data-value="web"><img src="../image/web_search_icon.png" alt=""> Web Image</div>
+                        <div data-value="ai" class="selected"><img src="../image/ai_image_icon.png" alt=""> AI Image</div>
+                        <div data-value="illustration"><img src="../image/illustration_icon.png" alt=""> Illustration</div>
+                        <div data-value="gif"><img src="../image/gif_icon.png" alt=""> Animated GIF</div>
+                    </div>
+                </div>
+                <label for="image-style">Image Style</label>
+                <textarea id="image-style" rows="3" placeholder="Coming soon..."></textarea>
+                <div class="image-gallery">
+                    <h5>Stock Photo</h5>
+                    <div class="image-scroll-wrapper">
+                        <div class="image-previews">
+                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Preview 1" class="active">
+                            <img src="https://images.unsplash.com/photo-1603145733146-ae562a55031e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Preview 2">
+                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Preview 3">
+                            <button class="show-more-btn">Show more →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-gallery">
+                    <h5>Web Image</h5>
+                    <div class="image-scroll-wrapper">
+                        <div class="image-previews">
+                            <img src="https://plus.unsplash.com/premium_photo-1683492749168-ee69f4d90193?q=80&w=1984&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Preview 4">
+                            <button class="show-more-btn">Show more →</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+        <div class="action-buttons">
+            <button class="btn-primary btn-secondary" id="cancel-btn">Cancel</button>
+            <button class="btn-primary" id="save-btn">Save</button>
+        </div>
+    </div>
+</div>
+
+<div class="progress-container-fixed" id="progress-bar-container">
+    <div class="progress-labels">
+        <span class="label">1</span>
+        <span class="label active">2</span>
+        <span class="label">3</span>
+    </div>
+    <div class="progress-steps">
+        <div class="progress-step"></div>
+        <div class="progress-step active"></div>
+        <div class="progress-step"></div>
+    </div>
+</div>
+
+<script src="../js/content.js"></script>
+</body>
+</html>

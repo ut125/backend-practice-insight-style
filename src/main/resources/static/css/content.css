@@ -1,0 +1,480 @@
+.header__logo img {
+    height: 39px;
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out;
+}
+
+main.content-wrapper {
+    padding-top: 120px;
+}
+.back-btn {
+    margin-bottom: 0;
+}
+body {
+    padding-bottom: 50px;
+}
+h2{
+    margin-block-start:0.5rem;
+    margin-block-end:0.5rem;
+}
+.divider {
+    margin: 0.05em auto 1em auto;
+}
+
+#content-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* ==========================================================================
+   CONTENT PAGE - A. SELECTION VIEW
+   ========================================================================== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+    width: 76%;
+}
+
+.custom-select {
+    position: relative;
+    font-family: sans-serif;
+    font-size: 14px;
+    flex: 1;
+    min-width: 180px;
+    max-width: 450px;
+}
+.select-selected {
+    width: 180px;
+    background-color: #e6e6e6;
+    border-radius: 2px;
+    padding: 14px 16px;
+    cursor: pointer;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s;
+    position: relative;
+    margin-right: 0;
+}
+
+.article{
+    width: 278px;
+    height: 42px;
+    font-size: 15px;
+}
+
+
+.select-selected:hover {
+    background-color: #ededed;
+}
+.select-selected span {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.select-selected img.dropdown-arrow {
+    width: 12px;
+    height: auto;
+}
+
+.select-items {
+    width: 280px;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 101;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.select-hide { display: none !important; }
+.select-items div { padding: 10px 16px; cursor: pointer; }
+.select-items div:hover { background-color: #f1f1f1; }
+.version-toggle { display: flex; gap: 0.5rem; }
+.version-btn {
+    min-width: 100px;
+}
+.version-btn.active {
+    background-color: #519671;
+    color: white; border-color: #519671;
+    cursor: default;
+}
+.version-btn.active:hover {
+    transform: none;
+    box-shadow: none;
+    background: #519671;
+    color: white;
+}
+.version-btn:not(.active) {
+    background-color: #e6e6e6;
+    color: #555;
+    border:0;
+}
+
+.content-display-wrapper {
+    position: relative;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 2.5rem 0 2rem 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    width: 76%;
+    height: 53vh;
+    display: flex;
+    flex-direction: column;
+}
+.version-watermark {
+    position: absolute;
+    top: 1rem; left: 2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    font-weight: 500;
+}
+
+#content-text-display {
+    flex-grow: 1;
+    min-height: 0;
+    overflow-y: auto;
+    line-height: 1.6;
+    color: #333;
+    white-space: pre-wrap;
+    padding-right: 2rem;
+}
+.edit-icon { position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    border: none;
+    background: url('../image/edit_1.png') no-repeat center;
+    background-size: contain;
+    width: 40px; height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border-radius: 0;
+    padding: 0; }
+
+.edit-icon:hover { background-image: url('../image/edit_2.png'); transform: scale(1.1); }
+.continue-btn {
+    margin-top: 1rem;
+    float: right;
+    display: flex
+}
+.coming-soon{
+    color: #aaa;
+}
+
+/* ==========================================================================
+   CONTENT PAGE - B. EDITING VIEW
+   ========================================================================== */
+#editing-view {
+    display: none;
+    padding-left: 5%;
+    padding-right: 5%;
+    box-sizing: border-box;
+}
+#page-container.is-editing #selection-view, #page-container.is-editing ~ #progress-bar-container { display: none; }
+#page-container.is-editing #editing-view { display: block; }
+.content-wrapper.edit-mode {
+    max-width: none;
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 2rem;
+    padding-top: 120px;
+    justify-content: center;
+}
+.editor-main-panel {
+    flex-grow: 1;
+    flex-basis: 60%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+.edit-title { text-align: left; margin: 0 0 1rem 0; font-size: 1.2rem; }
+
+.editor-container {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 8px 8px rgba(0,0,0,0.1);
+    position: relative;
+    width: 100%; /* 填滿 .editor-main-panel */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+#editable-content {
+    padding: 1.5rem;
+    outline: none;
+    height: 65vh;
+    overflow-y: auto;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.btn-secondary { background: #dddddd; color: #555; border:0; }
+
+.btn-secondary:hover { background: #e0e0e0; color: #333; }
+
+/* --- Rich Text Editor Toolbar --- */
+.rte-toolbar {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background: #f7f7f7;
+    display: flex;
+    align-items: center; gap: 8px;
+    flex-wrap: wrap;
+}
+.tool-group {
+    display: flex;
+    align-items: center;
+}
+.divider-vertical {
+    width: 1px;
+    height: 24px;
+    background-color: #ddd;
+
+}
+.tool-btn {
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    margin: 0 4px 0 4px;
+}
+.tool-btn:hover { background-color: #e9e9e9; }
+.tool-btn.active { background-color: #d6e8e8; }
+#tool-undo { background-image: url('../image/undo_1.png'); }
+#tool-redo { background-image: url('../image/redo_1.png'); }
+#tool-bold { background-image: url('../image/bold_1.png'); }
+#tool-bold.active { background-image: url('../image/bold_2.png'); }
+#tool-italic { background-image: url('../image/italic_1.png'); }
+#tool-italic.active { background-image: url('../image/italic_2.png'); }
+#tool-underline { background-image: url('../image/underline_1.png'); }
+#tool-underline.active { background-image: url('../image/underline_2.png'); }
+#tool-color { background-image: url('../image/TextColor_1.png'); }
+#tool-highlight { background-image: url('../image/highlight_1.png'); }
+#tool-align { background-image: url('../image/align_1.png'); }
+#tool-align.active { background-image: url('../image/align_2.png'); }
+#tool-spacing { background-image: url('../image/letter_spacing_1.png'); }
+#tool-list { background-image: url('../image/list_1.png'); }
+#tool-list.active { background-image: url('../image/list_2.png'); }
+#picture-tool-btn { background-image: url('../image/Image_1.png'); }
+#ai-tool-btn { background-image: url('../image/Rewrite_1.png'); }
+#ai-tool-btn.active { background-image: url('../image/Rewrite_2.png'); }
+
+.font-size-group {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+}
+.size-btn { font-size: 20px; color: #555; }
+.size-input { width: 40px; text-align: center; border: none; border-left: 1px solid #ccc; border-right: 1px solid #ccc; height: 30px; outline: none; font-size: 14px; }
+
+.color-indicator-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px
+}
+.color-indicator { position: absolute; bottom: 4px; left: 6px; right: 6px; height: 4px; border-radius: 2px; background-color: black; }
+#highlight-indicator-bar { background-color: transparent; border: 1px solid #ddd; }
+.tool-palette-container { position: relative; }
+.tool-palette {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 101; padding: 8px;
+    display: flex; gap: 8px;
+    flex-direction: row;
+}
+.tool-palette.align-right { left: auto; right: 0; }
+.color-box { width: 24px; height: 24px; border-radius: 4px; cursor: pointer; transition: transform 0.2s; }
+.color-box:hover { transform: scale(1.1); }
+#align-left {background-image: url('../image/align_left.png'); }
+#align-center { background-image: url('../image/align_center.png'); }
+#align-right { background-image: url('../image/align_right.png'); }
+
+.ai-select { position: relative; }
+.ai-menu { width: max-content; padding: 4px; left: 0; }
+.ai-menu.align-right { left: auto; right: 0; }
+.ai-menu div { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 4px; cursor: pointer;}
+.ai-menu div:hover { background-color: #f1f1f1; }
+.ai-menu img { width: 20px; height: 20px; }
+
+/* --- Picture Panel --- */
+.picture-panel {
+    width: 320px;
+    background-color: #e3efef;
+    border-radius: 4px;
+    padding: 1rem;
+    flex-shrink: 0;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#page-container.is-editing-picture .picture-panel { display: block; }
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0.5rem 0;
+}
+.panel-header h4 { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 1rem; font-weight: 600; }
+.panel-header h4 img { height: 18px; }
+.close-panel-btn { background: none; border: none; font-size: 1.5rem; color: #888; cursor: pointer; line-height: 1; }
+.picture-panel label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.picture-panel .custom-select { margin-bottom: 1rem; width: 100%; }
+.picture-source-select .select-selected {
+    background-color: #ffffff;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+.picture-source-select .select-selected span {
+    flex-grow: 1; /* 讓文字部分佔據中間的空間 */
+    text-align: center; /* 讓文字在它自己的空間內置中 */
+}
+.picture-source-select .select-selected .dropdown-arrow {
+    margin-left: auto; /* 將箭頭推到最右邊 */
+}
+/* 確保下拉列表也填滿父容器的寬度 */
+.picture-source-select .select-items {
+    width: 100%;
+}
+.picture-source-select .select-items div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.picture-source-select .select-selected img,
+.picture-source-select .select-items img {
+    height: 18px; /* 可以微調這個數值，例如 18px 或 20px */
+    width: 18px;
+    object-fit: contain; /* 確保圖片等比例縮放，不變形 */
+    flex-shrink: 0; /* 防止圖片在 flex 容器中被壓縮 */
+}
+
+/* 確保下拉箭頭不受影響，保持它自己的大小 */
+.picture-source-select .select-selected img.dropdown-arrow {
+    height: auto; /* 恢復自動高度 */
+    width: 12px;  /* 保持原有的箭頭寬度 */
+}
+.picture-panel textarea {
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    resize: vertical;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+.picture-panel textarea::placeholder { color: #aaa; }
+.image-gallery h5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 14px;
+}
+.image-scroll-wrapper { overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+.image-scroll-wrapper::-webkit-scrollbar { display: none; }
+.image-previews {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+    width: max-content;
+}
+.image-previews img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+
+.show-more-btn {
+    flex-shrink: 0;
+    width: 120px;
+    height: 80px;
+    border: 0;
+    border-radius: 6px;
+    background: #d1e3e3;
+    color: #6b8c8e; cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* --- Responsive Adjustments --- */
+/* content.css (在檔案末尾的媒體查詢中) */
+
+@media (max-width: 768px) {
+    /* --- 選擇區塊響應式 (Selection View) --- */
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* --- 編輯區塊響應式 (Editing View) --- */
+    .content-wrapper.edit-mode {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .picture-panel {
+        width: 100%;
+        order: 2;
+    }
+
+    .editor-main-panel {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        order: 1;
+    }
+    .action-buttons {
+        margin-top: 1rem;
+    }
+
+    .article{
+        max-width: 278px;
+        height: 42px;
+    }
+
+
+}
+

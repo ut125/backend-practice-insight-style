@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('../image/bg.png') center/cover no-repeat;
+    color: #333;
+  }
+  
+  .top-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+  }
+  
+  .header__logo img {
+    height: 40px;
+  }
+  
+  /* Main Content */
+  .content-wrapper {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Success Container */
+  .success-container {
+    text-align: center;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .success-icon {
+    width: 80px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .email-form {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .email-form input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    
+  }
+  
+  .email-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #567d80;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .start-btn {
+    margin-top: 15px;
+  }
+  
+  /* Primary Button */
+  .btn-primary {
+    background-color: #567d80;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #fff;
+    color: #567d80;
+    border: 2px solid #567d80;
+  }
+  

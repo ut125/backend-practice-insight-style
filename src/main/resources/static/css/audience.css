@@ -1,0 +1,169 @@
+.header__logo img {
+    height: 39px;
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out;
+}
+
+main.content-wrapper {
+    padding-top: 120px;
+}
+
+.back-btn {
+    margin-bottom: 2rem; /* 原為 4rem */
+}
+
+body {
+    padding-bottom: 80px;
+}
+
+/* --- Audience Card Container --- */
+.audience-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* --- Individual Audience Card --- */
+.audience-card {
+    flex: 1 1 240px;
+    max-width: 260px;
+    min-height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end; /* Align content to the bottom */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.audience-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Card Background Images --- */
+.card-policy { background-image: url('../image/card-policy.png'); }
+.card-tech { background-image: url('../image/card-tech.png'); }
+.card-academic { background-image: url('../image/card-academic.png'); }
+.card-media { background-image: url('../image/card-media.png'); }
+
+/* --- Card Overlay and Content --- */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 20%, transparent 60%);
+    transition: background-color 0.4s ease;
+}
+
+.audience-card:hover .card-overlay {
+    background-color: rgba(20, 25, 30, 0.7);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card-content h4 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.audience-card:hover .card-content h4 {
+    margin-bottom: 0.5rem;
+}
+
+/* --- Coming Soon Label --- */
+.coming-soon-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 0.25rem;
+    color: #dcdcdc;
+    opacity: 0.9;
+}
+
+/* --- Hidden Details List --- */
+.card-details {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 300;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height, ease-in 0.05s opacity 0.1s;
+}
+
+.audience-card:hover .card-details {
+    max-height: 200px;
+    opacity: 1;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1120px) {
+    .audience-container {
+        max-width: 95%;
+    }
+    .progress-container {
+        max-width: 90%;
+    }
+}
+@media (max-width: 880px) {
+    .progress-container {
+        display: none; /* Hide progress bar when layout gets too narrow */
+    }
+}
+
+@media (max-width: 580px) {
+    .audience-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .audience-card {
+        width: 90%;
+        height: 70%;
+        max-width: 320px;
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .card-details {
+        max-height: 200px;
+        opacity: 1;
+    }
+    .card-content h4 {
+        margin-bottom: 0.5rem;
+    }
+
+
+}

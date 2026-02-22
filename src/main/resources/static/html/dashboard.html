@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insight Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard_style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- choose date -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+
+<body>
+    <!-- (Your top-container and header remain unchanged) -->
+    <div class="top-container">
+        <header class="header">
+            <div class="header__logo">
+                <a href="https://staging.insightm.co.uk/" title="Insights Media">
+                    <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo-small.png" alt="Insights Media">
+                </a>
+            </div>
+            <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+        </header>
+    </div>
+
+ <!-- Dashboard -->
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <h2> Dashboard</h2>
+      <div class="divider"></div>
+    </header>
+  
+    <!-- Two-column containers -->
+    <div class="dashboard-grid">
+  
+      <!-- Overview Section -->
+      <section class="overview-section">
+        <h2>Overview</h2>
+  
+        <!-- Date Picker -->
+        <div class="custom-date-trigger" id="calendarTrigger">
+            <div class="calendar-icon-container">
+              <img src="../image/calander.png" alt="calendar" class="calendar-icon" />
+            </div>
+            <span id="selectedDates">SELECT DATE</span>
+            <div class="calendar-toggle-icon"></div>
+            <input type="text" id="calendarInput" style="display: none;" />
+          </div>  
+  
+        <!-- Metrics -->
+        <div class="metrics-grid">
+        <div class="metric-box">
+            <div class="metric-left">
+              <img src="../image/arrow .png" alt="Arrow Icon" class="arrow-icon"> 
+              <div class="label">EMAILS SENT</div>
+            </div>
+            <div class="value" id="emailsSent">0</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-left">
+                <img src="../image/arrow .png" alt="Arrow Icon" class="arrow-icon"> 
+                <div class="label">OPEN RATE</div>
+            </div>
+            <div class="value" id="openRate">0%</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-left">
+                <img src="../image/arrow .png" alt="Arrow Icon" class="arrow-icon"> 
+                <div class="label">CTR</div>
+            </div>
+            <div class="value" id="ctr">0%</div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-left">
+                <img src="../image/arrow .png" alt="Arrow Icon" class="arrow-icon"> 
+            <div class="label">AVERAGE VIEW DURATION</div>
+            </div>
+            <div class="value" id="avgViewDuration">0s</div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Engagement Section -->
+      <section class="engagement-section">
+  
+        <!-- Audience Dropdown -->
+        <div class="audience-selector">
+          <label for="audience-select">Target audience <span>(coming soon)</span></label>
+          <select id="audience-select">
+            <option>All</option>
+            <option>Policymakers(coming soon)</option>
+            <option>Tech & Market Adopters(coming soon)</option>
+            <option>Academic & Research Networks (coming soon)</option>
+            <option>Media & Awareness Builders (coming soon)</option>
+          </select>
+        </div>
+  
+        <!-- Bar Chart -->
+        <section class="metrics-section">
+            <h3>Average Engagement Metrics</h3>
+
+            <div class="bar-chart">
+              <div class="bar-container">
+                <div class="bar-wrapper">
+                    <div class="bar read-article-bar" data-value="0">0</div>
+                </div>
+                    <div class="bar-label">Read article</div>
+              </div>
+
+              <div class="bar-container">
+                <div class="bar-wrapper">
+                    <div class="bar interested-bar" data-value="0">0</div>
+                </div>
+                <div class="bar-label">Interested</div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-wrapper">
+                    <div class="bar gain-coop-bar" data-value="0">0</div>
+                </div>
+                <div class="bar-label">Gain co-operation</div>
+              </div>
+              <div class="unit-label">(times)</div>
+            </div>
+            
+          </section>
+    </div> <!-- end of dashboard-grid -->
+  
+    <!-- Download Button -->
+    <div class="download-button-container">
+        <button class="btn-primary" id="downloadBtn">Download</button>
+    </div>
+  </div>
+  
+  <!--js-->
+  <!--use html2pdf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- Flatpickr Script -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+    // testing fake data
+    const fakeData = [
+    {
+        start: "2025-07-23",
+        end: "2025-07-29",
+        read: 19,
+        interested: 40,
+        "Gain co-operation": 30,
+        emailsSent: 300,
+        openRate: 72,
+        ctr: 58,
+        avgViewDuration: 127
+      },
+    ];
+        function updateOverviewMetrics(data) {
+            // If I got the data format is like this：
+            // {
+            //   emailsSent: 300,
+            //   openRate: 72,
+            //   ctr: 51,
+            //   avgViewDuration: 142
+            // }
+          
+            document.getElementById("emailsSent").innerText = data.emailsSent ?? "–";
+            document.getElementById("openRate").innerText = data.openRate !== undefined ? data.openRate + "%" : "–";
+            document.getElementById("ctr").innerText = data.ctr !== undefined ? data.ctr + "%" : "–";
+            document.getElementById("avgViewDuration").innerText = data.avgViewDuration !== undefined ? data.avgViewDuration + "s" : "–";
+          }
+    
+
+    // Initialise bar height (first load)
+    function setInitialBarHeights() {
+        const bars = document.querySelectorAll('.bar');
+        bars.forEach(bar => {
+          const value = parseInt(bar.dataset.value);
+          const max = Math.max(...Array.from(bars).map(b => parseInt(b.dataset.value) || 1));
+          const height = (value / max) * 100;
+          bar.style.height = `${height}%`;
+        });
+      }
+    
+      // update the chart 
+      function updateBarChart(read=0, interested=0, gainCoop=0 ) {
+        const maxValue = Math.max(read, interested,1); 
+        const readBar = document.querySelector('.read-article-bar');
+        const interestedBar = document.querySelector('.interested-bar');
+        const gainCoopBar = document.querySelector('.gain-coop-bar');
+
+    
+        // update Read
+        readBar.dataset.value = read;
+        readBar.innerText = read;
+        readBar.style.height = `${(read / maxValue) * 100}%`;
+        
+        // update Interested
+        interestedBar.dataset.value = interested;
+        interestedBar.innerText = interested;
+        interestedBar.style.height = `${(interested / maxValue) * 100}%`;
+
+        // update Gain Co-operation
+        gainCoopBar.dataset.value = gainCoop;
+        gainCoopBar.innerText = gainCoop;
+        gainCoopBar.style.height = `${(gainCoop / maxValue) * 100}%`;
+      }
+    
+      // initial Flatpickr
+      const flatpickrInstance = flatpickr("#calendarInput", {
+        mode: "range", //let the monthly calendar can choose multipul date
+        dateFormat: "d M Y",
+        positionElement: document.getElementById("calendarTrigger"), 
+        onChange: function (selectedDates) {
+          const selectedDatesSpan = document.getElementById("selectedDates");
+    
+          if (selectedDates.length === 0) {
+            selectedDatesSpan.innerText = "SELECT DATE";
+            updateBarChart(0, 0);
+            return;
+          }
+
+          // Preventing early triggering by selecting only one date
+            if (selectedDates.length < 2) {
+                return;
+            }
+    
+          function formatDateLocal(date) {
+            const year = date.getFullYear();
+            const month = `${date.getMonth() + 1}`.padStart(2, '0');
+            const day = `${date.getDate()}`.padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          }
+
+          const sorted = selectedDates.sort((a, b) => a - b);
+          const userStart = formatDateLocal(sorted[0]);
+          const userEnd = formatDateLocal(sorted[1]);
+
+          // Display selected dat
+          const options = { day: "2-digit", month: "short", year: "numeric" };
+          const first = sorted[0].toLocaleDateString("en-GB", options).toUpperCase().replace(/ /g, " ");
+          const last = sorted[1].toLocaleDateString("en-GB", options).toUpperCase().replace(/ /g, " ");
+          selectedDatesSpan.innerText = `${first} – ${last}`;
+
+          const matched = fakeData.find(entry => {
+            const entryStart = new Date(entry.start);
+            const entryEnd = new Date(entry.end);
+            return !(sorted[1] < entryStart || sorted[0] > entryEnd);
+          });
+
+        if (matched) {
+            updateBarChart(
+              matched.read,
+              matched.interested,
+              matched["Gain co-operation"]
+              );
+            updateOverviewMetrics(matched);
+        } else {
+            updateBarChart(0, 0, 0);
+            updateOverviewMetrics({
+              emailsSent: 0,
+              openRate: 0,
+              ctr: 0,
+              avgViewDuration: 0
+            });
+        }
+
+        console.log("User selected:", userStart, "to", userEnd);
+        }
+      });
+    
+      document.getElementById("calendarTrigger").addEventListener("click", () => {
+        flatpickrInstance.open();
+      });
+    
+      // Set bar height when first loaded
+      window.addEventListener("DOMContentLoaded", setInitialBarHeights);
+
+      // after click download button,download the PDF
+        document.getElementById("downloadBtn").addEventListener("click", () => {
+            const element = document.querySelector(".dashboard-container"); // Exported block settings
+            
+            const opt = {
+            //Download Format
+            filename:     'engagement-report.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }//Designed for horizontal download as a PDF file
+            };
+        
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+</body>
+</html>

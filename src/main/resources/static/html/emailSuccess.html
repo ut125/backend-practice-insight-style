@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promotion Status email success</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/emailSuccess.css">
+</head>
+
+<body>
+  <!-- Top Header (shared style) -->
+  <div class="top-container">
+    <header class="header">
+      <div class="header__logo">
+        <a href="https://insightm.co.uk" title="Insights Media">
+          <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Insights Media">
+        </a>
+      </div>
+      <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<!-- Main Content -->
+<main class="content-wrapper">
+<button class="btn-primary back-btn" onclick="history.back()">Back</button>
+
+<div class="status-container">
+    <h2>Promotion Status</h2>
+
+    <!-- Sending emails + Retry -->
+    <div class="status-line">
+    <div class="status-item">
+        <img src="../image/fulfil.png" alt="fulfil Icon" class="status-icon">
+        <span>Sending emails</span>
+    </div>
+    </div>
+
+
+     <!-- Generating PDF -->
+     <div class="status-line">
+        <div class="status-item">
+            <img src="../image/failure.png" alt="Fail Icon" class="status-icon">
+        <span>Generating PDF</span>
+        </div>
+        <button class="btn-primary retry-btn" id="retryBtn">Retry</button>
+    </div>
+
+    
+    <p class="email-label-text">
+        Would you like to receive a report on how your promotion performed?<br>
+        Please leave your email below:
+      </p>
+
+      <div class="email-input">
+        <input type="text" id="report-email" placeholder="Enter your email">
+        <button class="btn-primary" id="submit-btn">Submit</button>
+      </div>
+
+      <button class="btn-primary">Start New Upload</button>
+    </div>
+  </main>
+
+  <script type="module">
+    import {submitEmailMock } from "../js/mockApi.js";
+    import { runProcess } from "../js/loading_1.js";
+
+    // Retry button function
+    const retryBtn = document.getElementById("retryBtn");
+    retryBtn.addEventListener("click", async () => {
+      retryBtn.disabled = true;
+      retryBtn.innerHTML = `<span class="spinner"></span> Loading...`;
+      await runProcess(); // Simulate re-execution of the process
+    });
+
+    // Submit button Submit email
+    document.querySelector("#submit-btn").addEventListener("click", async () => {
+      const email = document.querySelector("#report-email").value;
+
+      if (!email || !email.includes("@")) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Use mockApi.js to simulate
+      try {
+        const result = await submitEmailMock(email); 
+        if (result.status === "ok") {
+          alert(" Simulated submission successful! Email received：" + email);
+        } else {
+          throw new Error("Mock simulated return error");
+        }
+      } catch (err) {
+        console.error("Mock simulation submission failed：", err);
+        alert("Failed to send, please try again later.！");
+      }
+    });
+  </script>
+</body>
+</html>

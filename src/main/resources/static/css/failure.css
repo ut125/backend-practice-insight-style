@@ -1,0 +1,49 @@
+.header__logo img {
+    height: 39px; /* 初始(大)的 Logo 高度 */
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out; /* 高度變化的動畫 */
+}
+
+main.content-wrapper {
+    padding-top: 120px;
+}
+
+/* css/failure.css */
+.failure-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+    font-family: sans-serif;
+}
+
+.failure-icon {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1.5em;
+    opacity: 0.7;
+}
+
+.error-title {
+    font-size: 1.1em;
+    color: #343a40;
+    margin: 0;
+    font-weight: bold; /* Make the title stand out */
+}
+
+.error-suggestion {
+    font-size: 1em;
+    color: #6c757d;
+    margin-top: 0.5em; /* Space between title and suggestion */
+    margin-bottom: 1.5em; /* Space between suggestion and button */
+}
+
+.retry-btn {
+    margin-top: 2em;
+}
+
+.retry-btn:hover {
+    background: white;
+    color: #567d80;
+}

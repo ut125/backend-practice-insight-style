@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Select Audience Type</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/audience.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- 標準頁首 -->
+<div class="top-container">
+    <header class="header">
+        <div class="header__logo">
+            <a href="https://insightm.co.uk" title="Insights Media">
+                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo-small.png" alt="Insights Media">
+            </a>
+        </div>
+        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<!-- 主要內容 -->
+<main class="content-wrapper">
+    <button class="btn-primary back-btn" onclick="history.back()">Back</button>
+
+    <h2>Select Audience Type</h2>
+    <div class="divider"></div>
+
+    <div class="audience-container">
+        <!-- Card 1: Impact & Policy -->
+        <div class="audience-card card-policy" data-audience="Policy makers">
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h4>Impact &<br>Policy Influencers</h4>
+                    <ul class="card-details">
+                        <li>1. Policy makers</li>
+                        <li>2. Standardization bodies</li>
+                        <li>3. Policy-driven Ecosystem actors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Tech -->
+        <div class="audience-card card-tech" data-audience="Industry">
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h4>Tech &<br>Market Adopters</h4>
+                    <ul class="card-details">
+                        <li>1. Industry</li>
+                        <li>2. Entrepreneurs</li>
+                        <li>3. Venture capitalists</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Academic -->
+        <div class="audience-card card-academic" data-audience="Academia">
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h4>Academic &<br>Research Network</h4>
+                    <ul class="card-details">
+                        <li>1. Academia</li>
+                        <li>2. Research-focused Ecosystem actors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Media -->
+        <div class="audience-card card-media" data-audience="Media">
+            <div class="card-overlay">
+                <div class="card-content">
+                    <h4>Media &<br>Awareness Builders</h4>
+                    <ul class="card-details">
+                        <li>1. Media</li>
+                        <li>2. Communication-focused platforms, citizen science networks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="progress-container-fixed">
+    <div class="progress-labels">
+        <span class="label active">1</span>
+        <span class="label">2</span>
+        <span class="label">3</span>
+    </div>
+    <div class="progress-steps">
+        <div class="progress-step active"></div>
+        <div class="progress-step "></div>
+        <div class="progress-step"></div>
+    </div>
+</div>
+
+<script src="../js/audience.js"></script>
+
+</body>
+</html>

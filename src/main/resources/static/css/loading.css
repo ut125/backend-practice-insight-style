@@ -1,0 +1,163 @@
+.header__logo img {
+    height: 39px; /* 初始(大)的 Logo 高度 */
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out; /* 高度變化的動畫 */
+}
+
+main.content-wrapper {
+    padding-top: 120px;
+}
+
+
+/* --- File Upload UI --- */
+.file-status-container {
+    width: 100%;
+    max-width: 1000px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file-item {
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    position: relative; /* Crucial for positioning the progress bar */
+    overflow: hidden; /* Hides the progress bar overflow */
+    border: 1px solid #e0e0e0;
+    transition: all 0.4s ease;
+}
+
+/* Progress Bar Styling (to match design) */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px; /* Thickness of the bar */
+    width: 0%;   /* Starts at 0% */
+    background-color: #6c757d; /* Initial loading color */
+    transition: width 0.2s linear, background-color 0.4s ease;
+}
+
+/* --- Icons --- */
+.file-icon {
+    width: 24px; height: 24px; flex-shrink: 0; margin-right: 15px; background-size: contain; background-repeat: no-repeat; background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888888'%3E%3Cpath d='M6 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6H6zm6 6V4l4 4h-4z'/%3E%3C/svg%3E");
+    transition: background-image 0.4s ease;
+}
+
+.delete-icon {
+    width: 24px; height: 24px; flex-shrink: 0; margin-left: 15px; background-size: contain; background-repeat: no-repeat; background-position: center;
+    cursor: pointer;
+    opacity: 0; /* Hidden by default */
+    z-index: 10;
+    transition: opacity 0.4s ease;
+}
+
+.delete-icon img{
+    height: 24px;
+}
+
+.delete-icon img:hover {
+    content: url("../image/bin_2.png");
+}
+
+/* --- Filename --- */
+.file-name {
+    font-family: sans-serif; color: #333; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 10;
+}
+
+/* --- === COMPLETED STATE === --- */
+.file-item.completed {
+    border-color: #519671;
+}
+.file-item.completed .progress-bar {
+    background-color: #519671; /* Green bar when complete */
+    width: 100%;
+}
+.file-item.completed .file-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23519671'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E");
+}
+.file-item.completed .delete-icon {
+    opacity: 1;
+}
+
+/* --- Question Box and Inputs --- */
+.access-question-box {
+    width: 100%; max-width: 700px; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 25px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; display: none;
+}
+.access-question-box.visible {
+    display: block; opacity: 1; transform: translateY(0);
+}
+.access-question-box p {
+    margin-top: 0; font-size: 16px;
+}
+.required-star {
+    color: #d9534f;
+    margin-left: 4px;
+}
+.option-group {
+    margin-top: 15px;
+}
+.checkbox-option {
+    display: flex; align-items: flex-start;
+}
+.checkbox-option input[type="checkbox"] {
+    margin-top: 3px; margin-right: 10px; flex-shrink: 0;
+    /* Optional: Style checkbox to look more like the design */
+    width: 16px; height: 16px;
+}
+.checkbox-option label {
+    font-size: 14px; color: #555; line-height: 1.5;
+}
+
+.error-message {
+    display: none; /* So it takes its own line */
+    color: #d9534f; /* A standard error red color */
+    font-size: 13px;
+    margin-left: 26px; /* Align with the input field */
+    margin-top: 5px;
+    min-height: 15px; /* Prevent layout shift when message appears/disappears */
+    transition: all .3s ease;
+}
+
+/* URL Input Field Styling */
+.url-input {
+    display: none; /* Hidden by default */
+    width: calc(100% - 26px); /* Adjust width to align with text */
+    margin-left: 27px; /* Indent to align with the label text */
+    margin-top: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 0;
+    font-size: 14px;
+    background-color: transparent;
+    transition: border-color 0.3s ease;
+}
+.url-input:focus {
+    outline: none;
+    border-bottom-color: #519671; /* Green line on focus */
+}
+.url-input::placeholder {
+    color: #aaa;
+}
+
+.url-input.error {
+    border-bottom-color: #d9534f; /* A standard error red color */
+}
+
+/* Start Button Styling */
+.start-btn {
+    display: none; /* Hidden by default */
+    margin-top: 25px;
+    transition: all .3s ease;
+}

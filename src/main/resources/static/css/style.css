@@ -1,0 +1,338 @@
+/* --- Global Styles --- */
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: sans-serif;
+
+    /* --- 視差背景設定 (Parallax Background Setup) --- */
+    background-image: url('../image/bg.png');
+
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ffffff;
+
+    padding-bottom: 70px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --- Top Navigation Structure --- */
+
+/* 1. 新的頂部容器，現在由它來負責固定位置和背景 */
+.top-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: #ffffff;
+    box-shadow: 0 5px 6px rgba(0, 0, 0, .08);
+}
+
+/* 2. Header 本身不再需要 fixed 定位 */
+.header {
+    padding: 20px 30px; /* 初始(大)的上下邊距 */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding 0.3s ease-in-out; /* 動畫效果 */
+}
+
+
+/* --- Scrolled State (滾動後觸發的樣式) --- */
+
+/* 當滾動時，縮小 Header 的 padding */
+.top-container.scrolled .header {
+    padding: 20px 30px;
+}
+
+/* 當滾動時，將 Header-bar 的高度和 padding 設為 0，讓它平滑消失 */
+.top-container.scrolled .header-bar {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+}
+
+/* --- Header Elements --- */
+.header__logo img {
+    height: 74px; /* 初始(大)的 Logo 高度 */
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out; /* 高度變化的動畫 */
+}
+
+.header__logo img.small {
+    height: 39px; /* 滾動後(小)的 Logo 高度 */
+}
+
+.header__hamburger {
+    /* 1. 設定尺寸，需要給定明確的寬高 */
+    width: 46px;  /* 根據你的圖片實際大小調整 */
+    height: 43px; /* 根據你的圖片實際大小調整 */
+
+    /* 2. 設置預設的背景圖片 */
+    background-image: url('../image/menu_1.png');
+
+    /* 3. 確保背景圖完整顯示且不重複 */
+    background-size: contain; /* 或 'cover'，或直接用 px 值 */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* 4. 加上平滑的過渡效果 */
+    transition: background-image 0.2s ease-in-out;
+
+    /* 5. 確保點擊區域是可用的 */
+    display: block;
+}
+
+/* 6. 關鍵：當滑鼠懸停在 .header__hamburger 上時，更換背景圖片 */
+.header__hamburger:hover {
+    background-image: url('../image/menu_2.png');
+}
+
+
+/* --- Main Page Content --- */
+
+/* 4. 關鍵：為主要內容區塊添加上邊距，避免被 fixed 的 top-container 遮擋 */
+/* 這個值需要大約是 top-container 的初始高度，你可以根據實際情況微調 */
+.content-wrapper {
+    padding-top: 120px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === MASTER BUTTON STYLE === */
+/* Replace the old .back-btn style with this. This is now our primary button. */
+.btn-primary {
+    /* --- Sizing & Layout (for a fixed look) --- */
+    height: 42px;           /* Fixed height */
+    min-width: 140px;       /* A minimum width, but can grow if text is long */
+    padding: 0 25px;        /* Horizontal padding for text. Vertical is handled by flexbox. */
+    display: inline-flex;   /* Allows vertical alignment of text */
+    align-items: center;    /* Vertically centers the text */
+    justify-content: center;/* Horizontally centers the text */
+    box-sizing: border-box; /* Ensures padding & border are inside the height/width */
+
+    /* --- Appearance --- */
+    font-family: Poppins, sans-serif;
+    font-size: 15px;        /* Fixed font size */
+    font-weight: 300;
+    color: #ffffff;
+    background-color: #567d80;
+    border: 2px solid #567d80;
+    border-radius: 1px;     /* A subtle rounded corner */
+    text-decoration: none;  /* For cases where you use an <a> tag as a button */
+    cursor: pointer;
+
+    /* --- Effects --- */
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: white;
+    color: #567d80;
+    transform: translateY(-2px); /* A slight "lift" effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Keep .back-btn ONLY for positioning --- */
+/* This class will now be used alongside .btn-primary */
+.back-btn {
+    align-self: flex-start;
+    margin-left: 2.1875rem;
+    margin-bottom: 4rem;
+}
+
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    color: #519671;
+    margin-top: 0;
+    display: block;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-weight: normal;
+    unicode-bidi: isolate;
+}
+
+.divider {
+    width: 100px;
+    height: 1px;
+    background-color: #becb47;
+    margin: 0.05em auto 1em auto;
+    border-radius: 2px;
+}
+
+
+/* === GLOBAL PROGRESS BAR (REVISED) === */
+/* The main container - fixed to the bottom, responsive width */
+.progress-container-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    box-sizing: border-box;
+    padding: 15px 0 20px 0;
+}
+
+/* Container for the number labels */
+.progress-labels {
+    display: flex;
+    width: 100%;
+    margin-bottom: -8px;
+
+}
+.progress-labels .label {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: #88acae;
+    padding-left: 1rem;
+    z-index: 300;
+}
+.progress-labels .label.active {
+    color: #384242;
+}
+
+
+/* Container for the bar segments */
+.progress-steps {
+    display: flex;
+    width: 100%;
+}
+
+.progress-step {
+    flex: 1;
+    height: 12px;
+    position: relative;
+    background-color: #aac5c5;
+}
+
+/* --- REVISED clip-path logic --- */
+/* Default step (middle step) gets slanted on both sides */
+.progress-step {
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0% 100%);
+}
+/* The first step only gets slanted on the right */
+.progress-step:first-child {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 100%, 0% 100%);
+}
+/* The last step only gets slanted on the left */
+.progress-step:last-child {
+    clip-path: polygon(15px 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Overlap steps */
+.progress-step + .progress-step {
+    margin-left: -12px;
+}
+
+/* Active Step Styling */
+.progress-step.active {
+    background-color: #567d80;
+    z-index: 2;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding-top: 120px; /* This was from a previous step, it's correct */
+    }
+
+    h2 {
+        font-size: 1.875rem;
+        line-height: 2.1875rem;
+    }
+
+    /* --- THIS IS THE BLOCK TO REMOVE --- */
+    .back-btn {
+        padding: 6px 12px;
+    }
+    /* --- END OF BLOCK TO REMOVE --- */
+}
+
+/* === GLOBAL PROGRESS BAR (REVISED) === */
+/* The main container - fixed to the bottom, responsive width */
+.progress-container-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    box-sizing: border-box;
+    padding: 15px 0 20px 0;
+}
+
+/* Container for the number labels */
+.progress-labels {
+    display: flex;
+    width: 100%;
+    margin-bottom: -8px;
+
+}
+.progress-labels .label {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: #88acae;
+    padding-left: 1rem;
+    z-index: 300;
+}
+.progress-labels .label.active {
+    color: #384242;
+}
+
+/* Container for the bar segments */
+.progress-steps {
+    display: flex;
+    width: 100%;
+}
+
+.progress-step {
+    flex: 1;
+    height: 12px;
+    position: relative;
+    background-color: #aac5c5;
+}
+
+/* --- REVISED clip-path logic --- */
+/* Default step (middle step) gets slanted on both sides */
+.progress-step {
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0% 100%);
+}
+/* The first step only gets slanted on the right */
+.progress-step:first-child {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 100%, 0% 100%);
+}
+/* The last step only gets slanted on the left */
+.progress-step:last-child {
+    clip-path: polygon(15px 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Overlap steps */
+.progress-step + .progress-step {
+    margin-left: -12px;
+}
+
+/* Active Step Styling */
+.progress-step.active {
+    background-color: #567d80;
+    z-index: 2;
+}
+
+body {
+    padding-bottom: 80px;
+}

@@ -1,0 +1,168 @@
+.header__logo img {
+    height: 39px;
+    vertical-align: middle;
+    transition: height 0.3s ease-in-out;
+}
+
+main.content-wrapper {
+    padding-top: 120px;
+}
+
+
+main.content-wrapper {
+    padding-top: 120px; 
+}
+
+.container {
+    display: flex ;   
+    gap: 20px;          
+    width: calc(100% - 2.1875rem); 
+    margin-left: 2.1875rem;        
+    margin-right: 2.1875rem;
+    padding: 20px;
+}
+
+/* left Sidebar */
+.sidebar {
+    flex: 1;
+    padding: 20px;
+    background-color: #eaf4f2;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #2a6456;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 0.5;   
+}
+
+/* subtitle（Share/Download） */
+.with-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+    margin: 15px 0 10px 0;
+    color: #144c3b;
+}
+
+/* confirm-button */
+#confirm-button {
+    margin-top: 20px;
+    align-self: center;
+}
+
+/* preview block */
+.preview {
+    flex: 2.5;
+    padding: 20px;
+    background-color: white;
+    border-radius: 6px;
+    
+
+    /* scroll bar */
+    max-height: 540px;      
+    overflow-y: scroll;       
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Adjust the spacing between the checkbox and the text. */
+.sidebar label,
+.sidebar p {
+    margin: 2px 0;       
+    display: flex;
+    align-items: center; 
+    gap: 4px;           
+}
+
+/* Email preview input box */
+.preview input[type="text"] {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Email content box */
+.email-box {
+    background-color: #f3f3f3;
+    padding: 20px;
+    min-height: 250px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Preview form row settings */
+.form-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* To / Cc */
+.email-label {
+    width: 40px;              
+    height: 32px;            
+    box-sizing: border-box;
+    line-height: 32px;        
+    padding: 0 10px;       
+    
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-right: 6px;
+    
+}
+
+/* Subject setting */
+.subject-label {
+    width: 80px;              
+    height: 32px;             
+    box-sizing: border-box;
+    line-height: 32px;        
+    padding: 0 10px;       
+    
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-right: 6px;
+    
+}
+
+/* Bcc label */
+.right-label {
+    position: absolute;
+    right: 10px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    line-height: 32px;        
+}
+
+/* To, Cc, Subject input box setting */
+.form-row input[type="text"] {
+    flex: 1;
+    height: 32px;
+    border: none;               /* Remove all borders */
+    border-bottom: 1px solid #ccc; /* Keep only the bottom border */
+    border-radius: 0;   
+    background-color: transparent; 
+    padding: 0 4px;             
+    font-size: 14px;
+    color: #333;
+    outline: none;          
+}

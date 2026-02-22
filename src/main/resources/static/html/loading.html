@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/loading.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- 標準頁首 -->
+<div class="top-container">
+    <header class="header">
+        <div class="header__logo">
+            <a href="https://insightm.co.uk" title="Insights Media">
+                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo-small.png" alt="Insights Media">
+            </a>
+        </div>
+        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<!-- 主要內容 -->
+<main class="content-wrapper">
+    <button class="btn-primary back-btn" onclick="history.back()">Back</button>
+
+    <h2>Upload Research Materials</h2>
+    <div class="divider"></div>
+
+    <!-- ✅ NEW: This container will hold the dynamic upload status UI -->
+    <div class="file-status-container" id="file-status-container">
+
+        <!-- The main row for the file upload status -->
+        <div class="file-item" id="file-item">
+            <!-- 1. The icon (will change from doc to checkmark) -->
+            <span class="file-icon" id="file-icon"></span>
+
+            <!-- 2. The filename -->
+            <span class="file-name" id="file-name-display">Uploading...</span>
+
+            <!-- 3. The delete icon (shown after loading) -->
+            <span class="delete-icon" id="delete-icon">
+                <img src="../image/bin_1.png">
+            </span>
+
+            <!-- 4. The progress bar (shown during loading) -->
+            <div class="progress-bar-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- The question box (hidden initially, shown after loading) -->
+        <div class="access-question-box" id="question-box">
+            <p><strong>Do you have public access to your articles?<span class="required-star">*</span></strong></p>
+
+            <!-- Option 1: Public with URL input -->
+            <div class="option-group">
+                <div class="checkbox-option">
+                    <input type="checkbox" id="access-public" name="access-type">
+                    <label for="access-public">If you have shared this information on other websites, please provide the website address.</label>
+                </div>
+                <input type="url" id="url-input" class="url-input" placeholder="Enter URL like https://www.google.com">
+                <span class="error-message" id="url-error-message"></span>
+            </div>
+
+            <!-- Option 2: Private -->
+            <div class="option-group">
+                <div class="checkbox-option">
+                    <input type="checkbox" id="access-private" name="access-type">
+                    <label for="access-private">No, keep it private. (You will lose some data collection, such as download and view original data.)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Start button, initially hidden -->
+        <button class="btn-primary start-btn" id="start-btn">Start</button>
+    </div>
+</main>
+
+<script src="../js/loading.js"></script>
+
+</body>
+</html>

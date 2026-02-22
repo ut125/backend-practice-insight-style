@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Upload Failed</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/failure.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- 標準頁首 -->
+<div class="top-container">
+    <header class="header">
+        <div class="header__logo">
+            <a href="https://insightm.co.uk" title="Insights Media">
+                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo-small.png" alt="Insights Media">
+            </a>
+        </div>
+        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<!-- 主要內容 -->
+<main class="content-wrapper">
+    <button class="btn-primary back-btn" onclick="history.back()">Back</button>
+
+    <h2>Upload Research Materials</h2>
+    <div class="divider"></div>
+
+    <!-- 失敗訊息 -->
+    <div class="failure-content">
+        <!-- 將 'Upload failed.png' 替換為你的圖示實際路徑 -->
+        <img src="../image/Upload failed.png" alt="Connection Lost Icon" class="failure-icon">
+        <p id="error-title" class="error-title">Loading error...</p>
+        <p id="error-suggestion" class="error-suggestion">Please wait a moment.</p>
+        <button class="btn-primary retry-btn" onclick="window.location.href='index.html'">Retry</button>
+    </div>
+</main>
+
+<!-- 引用此頁面的 JavaScript -->
+<script src="../js/failure.js"></script>
+
+</body>
+</html>

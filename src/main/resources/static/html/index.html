@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Upload Research Materials</title>
+    <link rel="stylesheet" href="../css/index.css" >
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- (Your top-container and header remain unchanged) -->
+<div class="top-container">
+    <header class="header">
+        <div class="header__logo">
+            <a href="https://insightm.co.uk" title="Insights Media">
+                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Insights Media">
+            </a>
+        </div>
+        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
+    </header>
+</div>
+
+<main class="content-wrapper">
+    <div class="space"></div>
+
+    <h2>Upload Research Materials</h2>
+    <div class="divider"></div>
+    <p class="intro-text welcoming"><strong>Welcome to SEED2GROWTH!</strong></p>
+    <p class="intro-text">Upload your research materials from your device, cloud, or a URL.<br> We’ll help you generate tailored content for different industry audiences.</p>
+
+    <div class="container">
+        <!-- From Device - MODIFIED -->
+        <label for="file-upload" class="card">
+            <img src="../image/Device_1.png" alt="Device" class="icon-device"/>
+            <p><strong>From Device</strong></p>
+            <p>✅ PDF, DOCX, Markdown</p>
+            <p class="coming-soon">❌ PPT (coming soon)</p>
+            <p class="coming-soon">❌ Audio (MP3, WAV) (coming soon)</p>
+        </label>
+        <!-- Hidden file input that the label above triggers -->
+        <input type="file" id="file-upload" accept=".pdf,.docx,.md,.markdown" style="display: none;"/>
+
+        <!-- From Cloud - MODIFIED -->
+        <div class="card" onclick="showComingSoon()">
+            <img src="../image/Cloud_1.png" alt="Cloud" class="icon-cloud"/>
+            <p><strong>From Cloud</strong></p>
+            <p class="coming-soon">❌ Google Slides (coming soon)</p>
+            <p class="coming-soon">❌ Google Docs (coming soon)</p>
+        </div>
+
+        <!-- From URL - MODIFIED -->
+        <div class="card" onclick="showComingSoon()">
+            <img src="../image/URL_1.png" alt="URL" class="icon-url"/>
+            <p><strong>From URL</strong></p>
+            <p class="coming-soon">❌ Website blogs (coming soon)</p>
+            <p class="coming-soon">❌ Notion (coming soon)</p>
+            <p class="coming-soon">❌ YouTube (coming soon)</p>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 15px; display: flex; align-items: center;">
+        <label><input type="checkbox" id="simulate-network-error"></label>
+        <p>Developer Mode: </p>
+        <strong>Simulate Network Error</strong>
+    </div>
+</main>
+
+
+<script src="../js/index.js"></script>
+
+</body>
+</html>

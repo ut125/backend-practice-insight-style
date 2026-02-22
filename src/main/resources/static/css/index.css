@@ -1,0 +1,109 @@
+
+
+
+
+.space {
+    padding-top: 40px;
+}
+
+
+.intro-text {
+    text-align: center;
+    font-size: 14px;
+    max-width: 600px;
+    margin: 0 1em 3em 1em;
+    color: #545e5e;
+}
+
+.welcoming {
+    font-size: 16px;
+    margin-bottom: 5px ;
+    color: #333333;
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    flex-wrap: wrap;
+    padding-bottom: 3em; /* 增加底部空間，方便看到滾動效果 */
+}
+
+.card {
+    width: 250px;
+    padding: 20px;
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card:hover,
+.card.selected {
+    background: #567d80;
+    color: white;
+}
+
+.card img {
+    width: 100px;
+    margin: 0 auto 0.5em;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .icon-device {
+    content: url("../image/Device_2.png");
+}
+
+.card:hover .icon-cloud {
+    content: url("../image/Cloud_2.png");
+}
+
+.card:hover .icon-url {
+    content: url("../image/URL_2.png");
+}
+
+.card p {
+    margin: 0.3em 0;
+    font-size: 14px;
+}
+
+.card .coming-soon {
+    color: #b0b0b0;
+}
+
+.card strong {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 0.5em;
+    color: #567d80;
+}
+
+.card:hover strong {
+    color: white;
+}
+
+
+/* --- Media Queries --- */
+
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 1em 0;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 350px;
+        margin-bottom: 1.5em;
+    }
+
+    .card img {
+        width: 64px;
+    }
+
+}
