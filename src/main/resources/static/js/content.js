@@ -52,46 +52,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 1. 页面加载时请求
     async function fetchAllContent() {
-        if (!sessionId) {
-            page.contentDisplay.innerHTML = '<span style="color:red;">Session missing!</span>';
+        const pdfText = localStorage.getItem('pdfContent');
+        if (!pdfText) {
+            page.contentDisplay.innerHTML = '<span style="color:red;">找不到 PDF 內容</span>';
             return;
         }
-        if (!audience) {
-            page.contentDisplay.innerHTML = '<span style="color:red;">Audience missing!</span>';
-            return;
-        }
-        page.contentDisplay.innerHTML = '<em>Loading all content...</em>';
+
+        page.contentDisplay.innerHTML = '<em>AI 正在分析 PDF...</em>';
+
         try {
-            // 一次性请求全部（可以约定后端支持批量，或者前端并发四个请求！）
-            const resp = await fetch('http://localhost:8000/generate_content', {
+            const resp = await fetch('/api/generate_content', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    session_id: sessionId,
-                    audience: audience,
-                    all: true  // 通知后端"全部内容"
+                    text: pdfText,
+                    audience: audience
                 })
             });
+
             if (resp.ok) {
-                allContent = await resp.json(); // allContent.summary.A, allContent.press.B ...
-                // 默认显示
-                showContent('summary', 'A');
+                const data = await resp.json();
+
+                // --- 關鍵：統一更新 mockData ---
+                mockData = data;
+
+                // 預設選中 summary 和 A 版
+                state.type = 'summary';
+                state.version = 'A';
+
+                // 渲染 UI
+                updateSelectionViewUI();
             } else {
-                page.contentDisplay.innerHTML = '<span style="color:red;">Failed to load!</span>';
+                page.contentDisplay.innerHTML = '<span style="color:red;">後端錯誤</span>';
             }
         } catch (e) {
-            page.contentDisplay.innerHTML = `<span style="color:red;">Error: ${e.message}</span>`;
+            page.contentDisplay.innerHTML = `<span style="color:red;">連線失敗: ${e.message}</span>`;
         }
-    }
-
-    // 2. 切换时本地渲染即可
-    function showContent(type, version) {
-        page.contentDisplay.innerHTML = allContent?.[type]?.[version] || '<span style="color:red;">No content</span>';
-        page.versionWatermark.textContent = `${version}-Version`;
-        page.versionA.classList.toggle('active', version === 'A');
-        page.versionB.classList.toggle('active', version === 'B');
-        const selectedOption = page.selectItems.querySelector(`[data-value="${type}"]`);
-        if (selectedOption) page.selectSelectedText.textContent = selectedOption.textContent;
     }
 
 
@@ -121,10 +117,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateSelectionViewUI() {
         const { type, version } = state;
-        page.contentDisplay.innerHTML = mockData[type]?.[version] || '';
+
+        // 從 mockData 讀取
+        const content = (mockData[type] && mockData[type][version]) ? mockData[type][version] : "無內容";
+        page.contentDisplay.innerHTML = content;
+
+        // 更新浮水印
         page.versionWatermark.textContent = `${version}-Version`;
+
+        // 更新按鈕高亮狀態
         page.versionA.classList.toggle('active', version === 'A');
         page.versionB.classList.toggle('active', version === 'B');
+
+        // 更新下拉選單文字
         const selectedOption = page.selectItems.querySelector(`[data-value="${type}"]`);
         if (selectedOption) page.selectSelectedText.textContent = selectedOption.textContent;
     }
@@ -230,13 +235,26 @@ document.addEventListener('DOMContentLoaded', function () {
         closeAllPalettes();
         page.selectItems.classList.toggle('select-hide');
     });
+    // 類型切換 (下拉選單)
     page.selectItems.addEventListener('click', (e) => {
         const target = e.target.closest('[data-value]');
-        if (target) { state.type = target.dataset.value; updateSelectionViewUI(); }
+        if (target) {
+            state.type = target.dataset.value;
+            updateSelectionViewUI();
+        }
     });
-    page.versionA.addEventListener('click', () => { state.version = 'A'; updateSelectionViewUI(); });
-    page.versionB.addEventListener('click', () => { state.version = 'B'; updateSelectionViewUI(); });
 
+    // 版本 A 切換
+    page.versionA.addEventListener('click', () => {
+        state.version = 'A';
+        updateSelectionViewUI();
+    });
+
+    // 版本 B 切換
+    page.versionB.addEventListener('click', () => {
+        state.version = 'B';
+        updateSelectionViewUI();
+    });
     // --- Toolbar Direct Actions ---
     page.rteToolbar.addEventListener('mousedown', e => {
         const button = e.target.closest('.tool-btn');
@@ -392,12 +410,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Define the automatic request function
     async function fetchAudienceContacts() {
-        if (!sessionId || !audience) {
-            console.warn('Session ID or Audience is missing, cannot send request!');
-            return;
-        }
+        if (!sessionId || !audience) return;
         try {
-            const resp = await fetch('http://localhost:8000/find_audience_contacts', {
+            const resp = await fetch('http://localhost:8000/find_audience_contacts', { // 如果這也要連 Java，請改埠號和路徑
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -405,12 +420,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     audience: audience
                 })
             });
-            const data = await resp.json();
+
+            // 這裡不要再 const data 了，因為上面 fetchAllContent 用過了或者會衝突
+            const resultData = await resp.json();
             if (resp.ok) {
-                console.log(`Request successful, status: ${data.status}, count: ${data.count || 'N/A'}`);
-                // Here you can handle the returned data, e.g. display on the page or save it
-            } else {
-                console.error(`Request failed: ${data.message || 'Unknown error'}`);
+                console.log(`Audience count: ${resultData.count || 'N/A'}`);
             }
         } catch (e) {
             console.error(`Request error: ${e.message}`);
