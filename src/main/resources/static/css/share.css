@@ -1,9 +1,0 @@
-.header__logo img {
-    height: 39px;
-    vertical-align: middle;
-    transition: height 0.3s ease-in-out;
-}
-
-main.content-wrapper {
-    padding-top: 120px;
-}

@@ -166,3 +166,39 @@ main.content-wrapper {
     color: #333;
     outline: none;          
 }
+
+.option-group {
+    margin-bottom: 30px;
+}
+
+/* 讓 Checkbox 和 Label 垂直對齊並有間距 */
+.option-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px; /* 控制勾選框與文字的距離 */
+}
+
+/* 讓標題與圖標對齊 */
+.with-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+/* 變灰色的 coming soon 樣式 */
+.option-item.disabled {
+    opacity: 0.5;
+    color: #888;
+}
+
+.option-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.option-item label {
+    cursor: pointer;
+}

@@ -1,7 +1,9 @@
 package org.example.insightmediademo.controller;
 
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -74,10 +76,16 @@ public class ContentController {
             document.open();
 
             // 注意：OpenPDF 預設字體不支援中文。如果你的內容有中文，下載下來會是空白。
-            // 我們先測試英文，確認流程正確。
+            // 注意：這裡是指向 Windows 系統字體路徑。
+            // ",0" 代表取該字體集中的第一個字體
+            BaseFont bfChinese = BaseFont.createFont("C:/Windows/Fonts/msjh.ttc,0", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+            // 設定字體：字體大小 12，正常
+            Font fontTitle = new Font(bfChinese, 16, Font.BOLD);
+            Font fontBody = new Font(bfChinese, 12, Font.NORMAL);
             document.add(new Paragraph("Insight Media Analysis Report"));
             document.add(new Paragraph("--------------------------------------"));
-            document.add(new Paragraph(plainText));
+            document.add(new Paragraph(plainText, fontBody));
 
             // 7. 關閉 Document (這會完成 PDF 格式的封裝)
             document.close();

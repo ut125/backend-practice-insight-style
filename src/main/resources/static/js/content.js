@@ -394,17 +394,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     page.versionA.addEventListener('click', () => {
         version = 'A';
-        showContent(contentType, version);
+        updateSelectionViewUI();
     });
     page.versionB.addEventListener('click', () => {
         version = 'B';
-        showContent(contentType, version);
+        updateSelectionViewUI();
     });
     page.selectItems.addEventListener('click', (e) => {
         const target = e.target.closest('[data-value]');
         if (target) {
             contentType = target.dataset.value;
-            showContent(contentType, version);
+            updateSelectionViewUI();
         }
     });
 
