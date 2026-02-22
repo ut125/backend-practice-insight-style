@@ -8,27 +8,32 @@ document.addEventListener("DOMContentLoaded", function() {
     if (emailBody) emailBody.innerHTML = finalContent;
     if (inputTo) inputTo.value = `Target: ${audienceType} group`; // 這裡把 Placeholder 改成 Value
 
-    document.getElementById('confirm-button').addEventListener('click', async () => {
+    // share_download.js 裡面的 Confirm 事件
+    document.getElementById('confirm-button').addEventListener('click', async function() {
+        const confirmBtn = this; // 取得按鈕本人
         const isEmail = document.getElementById('check-email').checked;
         const isPdf = document.getElementById('check-pdf').checked;
+        const finalContent = localStorage.getItem('finalContentForSharing') || "";
+        const audienceType = localStorage.getItem('audienceSelection') || "public";
 
-        // 這裡很重要：先預設為 fail，只有 fetch 成功才改成 success
+        // 1. 文字變更為 Processing 並停用按鈕防止重複點擊
+        confirmBtn.innerText = "Processing...";
+        confirmBtn.disabled = true;
+
         let emailStatus = isEmail ? 'fail' : 'none';
         let pdfStatus = isPdf ? 'fail' : 'none';
 
-        if (isEmail) {
-            try {
+        try {
+            if (isEmail) {
                 const resp = await fetch('/api/send-to-audience', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ audience: audienceType, content: finalContent })
                 });
-                if (resp.ok) emailStatus = 'success'; // 只有 200 OK 才會變 success
-            } catch (e) { console.error(e); }
-        }
+                if (resp.ok) emailStatus = 'success';
+            }
 
-        if (isPdf) {
-            try {
+            if (isPdf) {
                 const resp = await fetch('/api/download-pdf', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -40,9 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     const a = document.createElement('a'); a.href = url; a.download = "Report.pdf"; a.click();
                     pdfStatus = 'success';
                 }
-            } catch (e) { console.error(e); }
+            }
+        } catch (e) {
+            console.error("Connection Error", e);
         }
 
+        // 2. 存入狀態並跳轉
         localStorage.setItem('emailStatus', emailStatus);
         localStorage.setItem('pdfStatus', pdfStatus);
         window.location.href = 'promotion_status.html';
