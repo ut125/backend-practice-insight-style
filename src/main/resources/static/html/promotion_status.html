@@ -1,100 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Promotion Status</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/promotion_status.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Status</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/promotion_status.css">
 </head>
-
 <body>
-  <!-- top Header -->
-  <div class="top-container">
+<div class="top-container">
     <header class="header">
-      <div class="header__logo">
-        <a href="https://insightm.co.uk" title="Insights Media">
-          <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Insights Media" />
-        </a>
-      </div>
+        <div class="header__logo">
+            <a href="https://insightm.co.uk"><img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Logo"></a>
+        </div>
     </header>
-  </div>
+</div>
 
-  <!-- Main Content -->
-  <main class="content-wrapper">
-    <button class="btn-primary back-btn" onclick="history.back()">Back</button>
-
+<main class="content-wrapper">
+    <div class="space" style="height: 50px;"></div>
     <div class="status-container">
-      <h2>Promotion Status</h2>
+        <h2 style="color: #577E81; margin-bottom: 35px; font-size: 28px;">Promotion Status</h2>
 
-      <!-- Share Status -->
-      <div class="status-line">
-        <div class="status-item">
-          <img src="../image/failure.png" alt="Fail Icon" class="status-icon" />
-          <span>Sending emails failed</span>
+        <!-- Email 行 -->
+        <div id="row-email" class="status-line">
+            <div class="status-item">
+                <img id="img-email" src="" class="status-icon">
+                <span>Sending emails</span>
+            </div>
+            <button id="btn-email" class="btn-primary retry-btn hidden">Retry</button>
         </div>
-        <button class="btn-primary retry-btn" id="retryBtn">Retry</button>
-      </div>
 
-      <!-- Download Status -->
-      <div class="status-line">
-        <div class="status-item">
-          <img src="../image/failure.png" alt="Fail Icon" class="status-icon" />
-          <span>Generating PDF failed</span>
+        <!-- PDF 行 -->
+        <div id="row-pdf" class="status-line">
+            <div class="status-item">
+                <img id="img-pdf" src="" class="status-icon">
+                <span>Generating PDF</span>
+            </div>
+            <button id="btn-pdf" class="btn-primary retry-btn hidden">Retry</button>
         </div>
-        <button class="btn-primary retry-btn" id="retryBtn">Retry</button>
-      </div>
 
-      <p class="email-label-text">
-        Would you like to receive a report on how your promotion performed?<br />
-        Please leave your email below:
-      </p>
-
-      <!-- add id that can more easy to for JavaScript  -->
-      <div class="email-input">
-        <input type="text" id="report-email" placeholder="Enter your email" />
-        <button class="btn-primary" id="submit-btn">Submit</button>
-      </div>
-
-      <button class="btn-primary">Start New Upload</button>
+        <div style="margin-top: 50px;">
+            <p style="color: #666; font-size: 15px; line-height: 1.6;">
+                Would you like to receive a report on how your promotion performed?<br>
+                Please leave your email below:
+            </p>
+            <div class="email-input-group">
+                <input type="email" id="report-email" placeholder="Enter your email">
+                <button class="btn-primary" id="btn-submit-report">Submit</button>
+            </div>
+            <button class="btn-primary" style="width: 100%; margin-top: 15px; background-color: #577E81;" onclick="location.href='index.html'">Start New Upload</button>
+        </div>
     </div>
-  </main>
+</main>
 
-  <!--js-->
-  <script type="module">
-    import {submitEmailMock } from "../js/mockApi.js";
-    import { runProcess } from "../js/loading_1.js";
-
-    // the function of retry button
-    const retryBtn = document.getElementById("retryBtn");
-    retryBtn.addEventListener("click", async () => {
-      retryBtn.disabled = true;
-      retryBtn.innerHTML = `<span class="spinner"></span> Loading...`;
-      await runProcess(); // Simulate the re-execution process
-    });
-
-    // Submit button to send the email
-    document.querySelector("#submit-btn").addEventListener("click", async () => {
-      const email = document.querySelector("#report-email").value;
-
-      if (!email || !email.includes("@")) {
-        alert("Please enter a valid email address.");
-        return;
-      }
-      
-      // Use mockApi.js to simulate testing
-      try {
-        const result = await submitEmailMock(email); 
-        if (result.status === "ok") {
-          alert(" Simulated submission successful! Email received:" + email);
-        } else {
-          throw new Error("Mock simulated return error");
-        }
-      } catch (err) {
-        console.error("Mock simulation submission failed：", err);
-        alert("Failed to send, please try again later.！");
-      }
-    });
-  </script>
+<!-- 引入 JS -->
+<script src="../js/promotion_status.js"></script>
 </body>
 </html>

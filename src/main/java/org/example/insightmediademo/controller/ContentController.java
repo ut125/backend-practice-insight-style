@@ -87,7 +87,7 @@ public class ContentController {
             document.add(new Paragraph("--------------------------------------"));
             document.add(new Paragraph(plainText, fontBody));
 
-            // 7. 關閉 Document (這會完成 PDF 格式的封裝)
+            // 7. 關閉 Document
             document.close();
 
         } catch (Exception e) {

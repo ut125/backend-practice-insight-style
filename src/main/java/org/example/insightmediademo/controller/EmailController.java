@@ -41,6 +41,8 @@ public class EmailController {
 
     @PostMapping("/send-to-audience")
     public ResponseEntity<String> sendToAudience(@RequestBody Map<String, String> request) {
+        //return ResponseEntity.status(500).body("模擬的寄信失敗錯誤");
+
         String audienceType = request.get("audience");
         String content = request.get("content");
 
