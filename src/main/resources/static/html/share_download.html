@@ -1,127 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!--This page title -->
-  <title>Share & Download</title>
-  <!-- CSS -->
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/share_download.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Share & Download</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/share_download.css">
 </head>
+<body>
 
-<!-- shared Header -->
+<!-- Header -->
 <div class="top-container">
     <header class="header">
         <div class="header__logo">
-            <a href="https://insightm.co.uk" title="Insights Media">
-                <img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Insights Media">
-            </a>
+            <a href="https://insightm.co.uk"><img src="https://insightm.co.uk/wp-content/themes/insights-media/images/logo.png" alt="Logo"></a>
         </div>
-        <a href="#" class="header__hamburger" aria-label="Open Menu"></a>
     </header>
-  </div>
+</div>
 
-  <!-- Share & Download  -->
-  <main class="content-wrapper">
+<main class="content-wrapper">
     <div class="space"></div>
-
-     <!-- Back btn -->
-     <button class="btn-primary back-btn" onclick="goBack()">Back</button>
+    <button class="btn-primary back-btn" onclick="goBack()">Back</button>
     <h2>Share & Download</h2>
     <div class="divider"></div>
 
     <div class="container">
-        <!-- left Sidebar -->
+        <!-- 左側：選擇區 -->
         <div class="sidebar">
-            <h3 class="with-icon">Share</h3>
-                <!-- Share Icon -->
-                <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 13C9.44444 13 8.97222 12.8104 8.58333 12.4312C8.19444 12.0521 8 11.5917 8 11.05C8 10.985 8.01667 10.8333 8.05 10.595L3.36667 7.93C3.18889 8.0925 2.98333 8.21979 2.75 8.31188C2.51667 8.40396 2.26667 8.45 2 8.45C1.44444 8.45 0.972222 8.26042 0.583333 7.88125C0.194444 7.50208 0 7.04167 0 6.5C0 5.95833 0.194444 5.49792 0.583333 5.11875C0.972222 4.73958 1.44444 4.55 2 4.55C2.26667 4.55 2.51667 4.59604 2.75 4.68812C2.98333 4.78021 3.18889 4.9075 3.36667 5.07L8.05 2.405C8.02778 2.32917 8.01389 2.25604 8.00833 2.18562C8.00278 2.11521 8 2.03667 8 1.95C8 1.40833 8.19444 0.947917 8.58333 0.56875C8.97222 0.189583 9.44444 0 10 0C10.5556 0 11.0278 0.189583 11.4167 0.56875C11.8056 0.947917 12 1.40833 12 1.95C12 2.49167 11.8056 2.95208 11.4167 3.33125C11.0278 3.71042 10.5556 3.9 10 3.9C9.73333 3.9 9.48333 3.85396 9.25 3.76187C9.01667 3.66979 8.81111 3.5425 8.63333 3.38L3.95 6.045C3.97222 6.12083 3.98611 6.19396 3.99167 6.26437C3.99722 6.33479 4 6.41333 4 6.5C4 6.58667 3.99722 6.66521 3.99167 6.73562C3.98611 6.80604 3.97222 6.87917 3.95 6.955L8.63333 9.62C8.81111 9.4575 9.01667 9.33021 9.25 9.23812C9.48333 9.14604 9.73333 9.1 10 9.1C10.5556 9.1 11.0278 9.28958 11.4167 9.66875C11.8056 10.0479 12 10.5083 12 11.05C12 11.5917 11.8056 12.0521 11.4167 12.4312C11.0278 12.8104 10.5556 13 10 13Z" fill="#577E81"/>
-                </svg>
+            <!-- 分享區塊 -->
+            <section class="option-group">
+                <h3 class="with-icon">
+                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none"><path d="M10 13C9.44444 13 8.97222 12.8104 8.58333 12.4312..." fill="#577E81"/></svg>
+                    Share
+                </h3>
+                <div class="option-item">
+                    <input type="checkbox" id="check-email" checked>
+                    <label for="check-email">Email (Preset)</label>
+                </div>
+                <div class="option-item disabled">
+                    <input type="checkbox" disabled> <span>LinkedIn (coming soon)</span>
+                </div>
+                <div class="option-item disabled">
+                    <input type="checkbox" disabled> <span>Facebook (coming soon)</span>
+                </div>
+                <div class="option-item disabled">
+                    <input type="checkbox" disabled> <span>X (coming soon)</span>
+                </div>
+            </section>
 
-                <label>
-                  <input type="radio" name="share-type" value="email" checked> Email (Preset)
-                </label>
-                <p><input type="radio" name="share-type" value="linkedin" disabled> LinkedIn (coming soon)</p>
-                <p><input type="radio" name="share-type" value="facebook" disabled> Facebook (coming soon)</p>
-                <p><input type="radio" name="share-type" value="x" disabled> X (coming soon)</p>
-              
-            <h3 class="with-icon">Download</h3>
-              <!-- Download Icon -->
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 12.75V9.75C0 9.33579 0.335786 9 0.75 9C1.16421 9 1.5 9.33579 1.5 9.75V12.75C1.5 12.9489 1.57907 13.1396 1.71973 13.2803C1.86038 13.4209 2.05109 13.5 2.25 13.5H12.75C12.9489 13.5 13.1396 13.4209 13.2803 13.2803C13.4209 13.1396 13.5 12.9489 13.5 12.75V9.75C13.5 9.33579 13.8358 9 14.25 9C14.6642 9 15 9.33579 15 9.75V12.75C15 13.3467 14.7628 13.9189 14.3408 14.3408C13.9189 14.7628 13.3467 15 12.75 15H2.25C1.65326 15 1.08114 14.7628 0.65918 14.3408C0.237223 13.9189 0 13.3467 0 12.75ZM6.75 0.75C6.75 0.335786 7.08579 0 7.5 0C7.91421 0 8.25 0.335786 8.25 0.75V7.93945L10.7197 5.46973C11.0126 5.17683 11.4874 5.17683 11.7803 5.46973C12.0732 5.76262 12.0732 6.23738 11.7803 6.53027L8.03027 10.2803C7.73738 10.5732 7.26262 10.5732 6.96973 10.2803L3.21973 6.53027L3.16809 6.47351C2.92779 6.17893 2.94513 5.74433 3.21973 5.46973C3.49433 5.19513 3.92893 5.17779 4.22351 5.41809L4.28027 5.46973L6.75 7.93945V0.75Z" fill="#577E81"/>
-              </svg>
-            
-            <label>
-            <input type="radio" name="download-type" value="pdf" checked> PDF </label>
-            <p><input type="radio" name="download-type" value="PNG" disabled> PNG(coming) </p>
-            <p><input type="radio" name="download-type" value="HTML" disabled> HTML(coming soon) </p>
-            <p><input type="radio" name="download-type" value="MP3" disabled> MP3 (coming soon) </p>
-            <p><input type="radio" name="download-type" value="MP4" disabled> MP4 (coming soon) </p>
-
+            <!-- 下載區塊 -->
+            <section class="option-group">
+                <h3 class="with-icon">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M0 12.75V9.75..." fill="#577E81"/></svg>
+                    Download
+                </h3>
+                <div class="option-item">
+                    <input type="checkbox" id="check-pdf">
+                    <label for="check-pdf">PDF</label>
+                </div>
+                <div class="option-item disabled">
+                    <input type="checkbox" disabled> <span>PNG (coming soon)</span>
+                </div>
+                <div class="option-item disabled">
+                    <input type="checkbox" disabled> <span>HTML (coming soon)</span>
+                </div>
+            </section>
 
             <button id="confirm-button" class="btn-primary">Confirm</button>
         </div>
 
-        <!-- preview block -->
+        <!-- 右側：預覽區 -->
         <div class="preview">
             <h3>Preview</h3>
-
-            <!-- To block -->
-            <div class="form-row">
-                <span class="email-label">To</span>
-                <input type="text" id="to" placeholder="">
-                <span class="right-label">Bcc</span>
-            </div>
-
-            <!-- Cc block -->
-            <div class="form-row">
-                <span class="email-label">Cc</span>
-                <input type="text" id="cc" placeholder="">
-            </div>
-
-            <!--subject block-->
-            <div class="form-row">
-              <span class="subject-label">Subject</span>
-                <input type="text" id="cc" placeholder="">
-            </div>
-
-            <!-- email contant -->
-            <div id="email-content" class="email-box">
-                <p id="email-body"></p>
+            <div class="form-container">
+                <div class="form-row">
+                    <span class="email-label">To</span>
+                    <input type="text" id="input-to" readonly placeholder="Will send to selected audience">
+                    <span class="right-label">Bcc</span>
+                </div>
+                <div class="form-row">
+                    <span class="email-label">Cc</span>
+                    <input type="text" id="input-cc">
+                </div>
+                <div class="form-row">
+                    <span class="subject-label">Subject</span>
+                    <input type="text" id="input-subject" value="Insights Media Analysis Report">
+                </div>
+                <div id="email-content" class="email-box">
+                    <div id="email-body"></div> <!-- 這裡會顯示文章內容 -->
+                </div>
             </div>
         </div>
-  </main>
-
-  <!--progress bar-->
-  <div class="progress-container-fixed">
-    <div class="progress-labels">
-        <span class="label active">1</span>
-        <span class="label">2</span>
-        <span class="label">3</span>
     </div>
-    <div class="progress-steps">
-        <div class="progress-step "></div>
-        <div class="progress-step "></div>
-        <div class="progress-step active"></div>
-    </div>
-</div>
+</main>
 
-
-  <!-- shared JS -->
-  <script src="../js/index.js"></script>
-  <script>
-    function goBack() {
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.location.href = "../index.html";
-      }
-    }
-  </script>
-
-  <!--my JS-->
-  <script src="../js/share_download.js"></script>
+<script src="../js/share_download.js"></script>
+<script>
+    function goBack() { window.history.back(); }
+</script>
 </body>
 </html>

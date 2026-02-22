@@ -1,0 +1,18 @@
+# 這是一個範本檔案，請複製此檔案並命名為 application.properties，然後填入你自己的資訊
+spring.application.name=InsightMediaDemo
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=YOUR_GMAIL_HERE@gmail.com
+spring.mail.password=YOUR_16_DIGIT_APP_PASSWORD_HERE
+
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+
+# Audience List Template
+app.audience.Policy=RECIPIENT_EMAIL_1,RECIPIENT_EMAIL_2
+app.audience.Industry=RECIPIENT_EMAIL_3
+app.audience.Academia=RECIPIENT_EMAIL_4
+app.audience.Media=RECIPIENT_EMAIL_5
+app.audience.public=RECIPIENT_EMAIL_6
