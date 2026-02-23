@@ -11,9 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const startBtn = document.getElementById('start-btn');
     const urlErrorMessage = document.getElementById('url-error-message');
 
-    // --- 2. State Management Logic ---
+    // --- 2. 獲取資料庫 ID (關鍵：這是 index.js 存進來的) ---
+    const currentCampaignId = localStorage.getItem('currentCampaignId');
 
-    // Function to save the current state to localStorage
+    // --- 3. Initial Page Load ---
+    const uploadedFileName = localStorage.getItem('uploadedFileName');
+    if (uploadedFileName) {
+        fileNameDisplay.textContent = uploadedFileName;
+        // 嘗試恢復狀態，如果沒有就跑動畫
+        if (!restoreState()) {
+            simulateLoading();
+        }
+    } else {
+        fileNameDisplay.textContent = "No file found.";
+        fileItem.style.display = 'none';
+    }
+
+    // --- 下面保留你原本的邏輯函數 (saveState, restoreState, simulateLoading 等) ---
+
     function saveState() {
         const state = {
             accessType: publicCheckbox.checked ? 'public' : (privateCheckbox.checked ? 'private' : null),
@@ -22,51 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('loadingState', JSON.stringify(state));
     }
 
-    // Function to restore the UI from a saved state
     function restoreState() {
         const savedStateJSON = localStorage.getItem('loadingState');
-        if (!savedStateJSON) {
-            return false; // No saved state found
-        }
+        if (!savedStateJSON) return false;
 
         const savedState = JSON.parse(savedStateJSON);
-
         if (savedState.accessType === 'public') {
             publicCheckbox.checked = true;
-            privateCheckbox.checked = false;
-            urlInput.value = savedState.accessUrl || ''; // Restore URL
+            urlInput.value = savedState.accessUrl || '';
         } else if (savedState.accessType === 'private') {
             privateCheckbox.checked = true;
-            publicCheckbox.checked = false;
         }
 
-        // Directly show the completed state without animation
         fileItem.classList.add('completed');
-        progressBar.style.width = '100%'; // Set progress bar to 100%
+        progressBar.style.width = '100%';
         questionBox.style.display = 'block';
         questionBox.classList.add('visible');
-        handleCheckboxChange(); // Update UI based on restored state (e.g., show URL input and Start button)
-
-        return true; // State was restored
+        handleCheckboxChange();
+        return true;
     }
 
-    // --- 3. Initial Page Load ---
-    const uploadedFileName = localStorage.getItem('uploadedFileName');
-    if (uploadedFileName) {
-        fileNameDisplay.textContent = uploadedFileName;
-
-        // **KEY CHANGE**: Try to restore state first. If it fails, then simulate loading.
-        const stateRestored = restoreState();
-        if (!stateRestored) {
-            simulateLoading(); // Only run loading animation if there's no previous state to restore
-        }
-
-    } else {
-        fileNameDisplay.textContent = "No file found.";
-        fileItem.style.display = 'none';
-    }
-
-    // --- 4. Simulate Loading & Completion ---
     function simulateLoading() {
         let progress = 0;
         const interval = setInterval(() => {
@@ -85,17 +75,19 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => questionBox.classList.add('visible'), 50);
     }
 
-    // --- 5. Interactive Logic for UI Updates ---
+    function handleCheckboxChange() {
+        urlInput.style.display = publicCheckbox.checked ? 'block' : 'none';
+        startBtn.style.display = (publicCheckbox.checked || privateCheckbox.checked) ? 'block' : 'none';
+    }
+
     function clearUrlError() {
         urlInput.classList.remove('error');
         urlErrorMessage.style.display = 'none';
-        urlErrorMessage.textContent = '';
     }
 
-    function handleCheckboxChange() {
-        urlInput.style.display = publicCheckbox.checked ? 'block' : 'none';
-        if (!publicCheckbox.checked) clearUrlError();
-        startBtn.style.display = (publicCheckbox.checked || privateCheckbox.checked) ? 'block' : 'none';
+    function validateUrl(url) {
+        const urlPattern = new RegExp('^(https?|ftp):\\/\\/','i');
+        return !!urlPattern.test(url);
     }
 
     publicCheckbox.addEventListener('change', () => {
@@ -108,52 +100,59 @@ document.addEventListener('DOMContentLoaded', function() {
         handleCheckboxChange();
     });
 
-    urlInput.addEventListener('input', clearUrlError);
+    // --- 4. 修改後的 Start 按鈕邏輯 (加入 Java 串接) ---
+    startBtn.addEventListener('click', async function() {
+        clearUrlError();
 
-    function validateUrl(url) {
-        const urlPattern = new RegExp('^(https?|ftp):\\/\\/((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$','i');
-        return !!urlPattern.test(url);
-    }
+        let targetUrl = "";
 
-    // --- 6. Event Listeners for Icons and Buttons ---
-    deleteIcon.addEventListener('click', function() {
-        const confirmDelete = confirm("Are you sure you want to remove this file and go back?");
-        if (confirmDelete) {
-            localStorage.removeItem('uploadedFileName');
-            localStorage.removeItem('loadingState'); // **IMPORTANT**: Clear the saved state too
-            window.location.href = 'index.html';
+        if (publicCheckbox.checked) {
+            targetUrl = urlInput.value.trim();
+            if (targetUrl === '') {
+                urlErrorMessage.textContent = 'Please provide the website address.';
+                urlErrorMessage.style.display = 'block';
+                return;
+            }
+            if (!validateUrl(targetUrl)) {
+                urlErrorMessage.textContent = 'Invalid URL (must start with http:// or https://)';
+                urlErrorMessage.style.display = 'block';
+                return;
+            }
+        }
+
+        // --- 核心改動：呼叫 Java API ---
+        startBtn.innerText = "Saving...";
+        startBtn.disabled = true;
+
+        try {
+            const resp = await fetch('/api/update-url', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: currentCampaignId, // 傳送資料庫 ID
+                    url: targetUrl          // 傳送填寫的網址 (Private 則為空字串)
+                })
+            });
+
+            if (resp.ok) {
+                saveState(); // 存下本地狀態
+                window.location.href = 'audience.html'; // 跳轉下一頁
+            } else {
+                alert("Failed to save to database. Please try again.");
+            }
+        } catch (error) {
+            console.error("Connection error:", error);
+            alert("Connection error, make sure Java backend is running.");
+        } finally {
+            startBtn.innerText = "Start";
+            startBtn.disabled = false;
         }
     });
 
-    startBtn.addEventListener('click', function() {
-        clearUrlError();
-
-        if (privateCheckbox.checked) {
-            saveState(); // Save state before navigating
-            window.location.href = 'audience.html';
-            return;
-        }
-
-        if (publicCheckbox.checked) {
-            const url = urlInput.value.trim();
-            if (url === '') {
-                urlErrorMessage.textContent = 'Please provide the website address.';
-                urlErrorMessage.style.display = 'block';
-                urlInput.classList.add('error');
-                urlInput.focus();
-                return;
-            }
-            if (!validateUrl(url)) {
-                urlErrorMessage.textContent = 'Please enter a valid URL (e.g., https://example.com)';
-                urlErrorMessage.style.display = 'block';
-                urlInput.classList.add('error');
-                urlInput.value = '';
-                urlInput.focus();
-                return;
-            }
-
-            saveState(); // Save state before navigating
-            window.location.href = 'audience.html';
+    deleteIcon.addEventListener('click', function() {
+        if (confirm("Remove file?")) {
+            localStorage.clear();
+            window.location.href = 'index.html';
         }
     });
 });

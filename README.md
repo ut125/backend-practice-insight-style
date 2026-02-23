@@ -33,7 +33,7 @@ All code is independently rewritten and does not contain any proprietary or conf
 <br>
 <b> 模擬 AI 內容生成:</b>  根據 PDF 標題與內容，自動產生多版本（新聞稿/摘要）的推廣文案。<br>
 <br>
-<b> 富文本編輯器:</b>  使用者可自訂字體顏色、樣式並即時儲存。<br>
+<b> 文本編輯器:</b>  使用者可自訂字體顏色、樣式並即時儲存。<br>
 <br>
 <b> 自動化郵件發送系統:</b>  整合 Google SMTP 服務，根據受眾類型實現一鍵群發。<br>
 <br>

@@ -82,30 +82,47 @@ fileInput.addEventListener('change', function(event) {
 
     const formData = new FormData();
     formData.append('file', file);
+    console.log("開始上傳...");
 
     // 開始 fetch
-    fetch('http://localhost:8080/api/upload', { // 注意埠號 8080
+    fetch('http://localhost:8080/api/upload', {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if (!response.ok) throw new Error('後端錯誤');
-            console.log("3. 收到回應了！狀態碼：", response.status);
-            return response.text(); // 改用 .text() 因為 Java 回傳純文字
-        })
-        .then(extractedText => {
-            // --- 關鍵：把 Java 讀出來的 PDF 文字存進去 ---
-            localStorage.setItem('pdfContent', extractedText);
-            localStorage.setItem('uploadedFileName', file.name);
+        .then(async response => {
+            // 檢查回傳的內容類型
+            const contentType = response.headers.get("content-type");
+            let data;
 
-            console.log("成功拿到 PDF 文字！");
-            console.log("4. 資料已存入 LocalStorage");
-            window.location.href = 'loading.html'; // 成功才跳轉
+            if (contentType && contentType.includes("application/json")) {
+                data = await response.json(); // 是 JSON 就解析成 JSON
+            } else {
+                data = { error: await response.text() }; // 不是 JSON 就包裝成物件
+            }
+
+            // 1. 處理重複檔案 (409)
+            if (response.status === 409) {
+                alert("Wait! " + (data.error || "File already exists."));
+                throw new Error("Duplicate");
+            }
+
+            // 2. 處理檔案過大 (413) 或 其他錯誤 (500)
+            if (!response.ok) {
+                alert("Upload Failed: " + (data.error || "Unknown server error"));
+                throw new Error(data.error || "Server Error");
+            }
+
+            // 3. 成功
+            return data;
+        })
+        .then(data => {
+            localStorage.setItem('pdfContent', data.text);
+            localStorage.setItem('currentCampaignId', data.dbId);
+            localStorage.setItem('uploadedFileName', file.name);
+            window.location.href = 'loading.html';
         })
         .catch(err => {
-            console.error("上傳失敗:", err);
-            localStorage.setItem('uploadFailureReason', '上傳失敗：' + err.message);
-            window.location.href = 'failure.html'; // 失敗跳轉到錯誤頁
+            console.error("Fetch process caught an error:", err);
         });
 });
 
