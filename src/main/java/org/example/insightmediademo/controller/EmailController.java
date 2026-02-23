@@ -41,9 +41,9 @@ public class EmailController {
 
     @PostMapping("/send-to-audience")
     public ResponseEntity<String> sendToAudience(@RequestBody Map<String, String> request) {
-        return ResponseEntity.status(500).body("模擬的寄信失敗錯誤");
+        //return ResponseEntity.status(500).body("模擬的寄信失敗錯誤");
 
-        /*String audienceType = request.get("audience");
+        String audienceType = request.get("audience");
         String content = request.get("content");
 
         // 根據受眾類型選擇對應的 Email 字串
@@ -69,7 +69,7 @@ public class EmailController {
             return ResponseEntity.ok("Sent to " + recipients.size() + " recipients.");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Fail: " + e.getMessage());
-        }*/
+        }
     }
 
     // 抽離出來的寄信邏輯
