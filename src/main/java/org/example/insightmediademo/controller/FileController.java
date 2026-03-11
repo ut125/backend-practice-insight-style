@@ -74,7 +74,7 @@ public class FileController {
             campaign.setId(id);
             campaign.setOriginalUrl(url);
 
-            // 呼叫 Service 的 update (之前我們已經寫好了)
+            // 呼叫 Service 的 update
             campaignService.updateCampaignInfo(campaign);
 
             return ResponseEntity.ok("URL updated successfully");

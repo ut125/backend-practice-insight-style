@@ -2,13 +2,13 @@
 This is a personal backend practice project inspired by a previous academic collaboration project.<br>
 All code is independently rewritten and does not contain any proprietary or confidential information.
 
-# Insight Media - 智能研究推廣平台 (Full-Stack Demo)
+# Insight Media - 智能研究推廣平台
 這是一個全棧（Full-Stack）網頁應用程式，旨在協助研究人員將複雜的 PDF 論文快速轉化為適合不同受眾（政策制定者、媒體、學術界等）的推廣文章，並一鍵完成郵件分發與文件下載。
 
-## 🚀 技術棧 (Tech Stack)
-### ⚙️ 後端 (Backend)
+## 🚀 技術
+### ⚙️ 後端
 
-<b> Java 17 & Spring Boot 3.x </b> <br>
+<b> Java 17 & Spring Boot 3.3.4 </b> <br>
 <br>
 <b> Spring Mail: </b> 處理自動化郵件群發邏輯。<br>
 <br>
@@ -18,7 +18,7 @@ All code is independently rewritten and does not contain any proprietary or conf
 <br>
 <b> RESTful API:</b>  前後端分離架構設計。<br>
 
-### 🖥️ 前端 (Frontend)
+### 🖥️ 前端
 
 <b> HTML5 / CSS3 / JavaScript (Vanilla JS)</b> <br>
 <br>
@@ -26,12 +26,12 @@ All code is independently rewritten and does not contain any proprietary or conf
 <br>
 <b> Fetch API: </b> 非同步處理數據傳輸。<br>
 
-## 🛠️ 專案進度 (Progress)
+## 🛠️ 專案進度
 ### ✅ 已完成功能
 
 <b> PDF 檔案上傳與解析:</b>  後端能準確提取 PDF 文字並傳回前端。<br>
 <br>
-<b> 模擬 AI 內容生成:</b>  根據 PDF 標題與內容，自動產生多版本（新聞稿/摘要）的推廣文案。<br>
+<b> 模擬 AI 內容生成:</b>  根據 PDF 標題與內容，模擬產生多版本（新聞稿/摘要）的推廣文案。<br>
 <br>
 <b> 文本編輯器:</b>  使用者可自訂字體顏色、樣式並即時儲存。<br>
 <br>
@@ -39,19 +39,19 @@ All code is independently rewritten and does not contain any proprietary or conf
 <br>
 <b> 動態 PDF 報告生成:</b>  支援將編輯後的成果導出為 PDF 文件。<br>
 <br>
-<b> 任務狀態追蹤器:</b>  即時顯示各項任務執行結果，並提供原地重試 (Retry) 機制。<br>
+<b> 任務狀態追蹤器:</b>  即時顯示各項任務執行結果，並提供重試 (Retry) 機制。<br>
 
-### ⏳ 未完成/待開發 (Roadmap)
+### ⏳ 未完成/待開發
 
-<b> 資料庫持久化:</b> 引入 MyBatis/JPA，將受眾名單與發送紀錄存入 MySQL。<br>
+<b> 資料庫持久化:</b> 引入 MyBatis，將受眾名單與發送紀錄存入 MySQL。(建立中)<br>
 <br>
-<b> AI API 真正對接: </b>預計接入 Google Gemini 或 OpenAI API 實現真正的智慧摘要。<br>
+<b> AI API 真正對接: </b>預計接入 Google Gemini 實現由 AI 生成針對不同客群的不同風格摘要。<br>
 <br>
-<b> 社群平台分享:</b> 實作 LinkedIn 與 Facebook 的 API 串接。<br>
+<b> 社群平台分享:</b> 預計實作 LinkedIn 與 Facebook 的 API 串接。<br>
 <br>
 <b> 進階點閱統計: </b>自建 Tracking Pixel 以統計郵件開啟率。<br>
 
-## 📈 計畫變更說明 (Project Evolution)
+## 📈 計畫變更說明
 
 在開發過程中，我根據開發成本與技術展示需求，對原計畫進行了靈活調整：<br>
 

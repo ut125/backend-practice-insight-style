@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class CampaignServiceImpl implements CampaignService {
 
-    // 注入你寫的 MyBatis Mapper
+    // 注入 MyBatis Mapper
     @Autowired
     private CampaignMapper campaignMapper;
 
