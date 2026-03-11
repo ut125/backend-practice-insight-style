@@ -29,27 +29,27 @@ All code is independently rewritten and does not contain any proprietary or conf
 ## 🛠️ 專案進度
 ### ✅ 已完成功能
 
-<b> PDF 檔案上傳與解析:</b>  後端能準確提取 PDF 文字並傳回前端。<br>
-<br>
-<b> 模擬 AI 內容生成:</b>  根據 PDF 標題與內容，模擬產生多版本（新聞稿/摘要）的推廣文案。<br>
-<br>
-<b> 文本編輯器:</b>  使用者可自訂字體顏色、樣式並即時儲存。<br>
-<br>
-<b> 自動化郵件發送系統:</b>  整合 Google SMTP 服務，根據受眾類型實現一鍵群發。<br>
-<br>
-<b> 動態 PDF 報告生成:</b>  支援將編輯後的成果導出為 PDF 文件。<br>
-<br>
-<b> 任務狀態追蹤器:</b>  即時顯示各項任務執行結果，並提供重試 (Retry) 機制。<br>
+-[x] <b> PDF 檔案上傳與解析:</b>  後端能準確提取 PDF 文字並傳回前端。<br>
+
+-[x] <b> 模擬 AI 內容生成:</b>  根據 PDF 標題與內容，模擬產生多版本（新聞稿/摘要）的推廣文案。<br>
+
+-[x] <b> 文本編輯器:</b>  使用者可自訂字體顏色、樣式並即時儲存。<br>
+
+-[x] <b> 自動化郵件發送系統:</b>  整合 Google SMTP 服務，根據受眾類型實現一鍵群發。<br>
+
+-[x]  動態 PDF 報告生成:</b>  支援將編輯後的成果導出為 PDF 文件。<br>
+
+-[x]  任務狀態追蹤器:</b>  即時顯示各項任務執行結果，並提供重試 (Retry) 機制。<br>
 
 ### ⏳ 未完成/待開發
 
-<b> 資料庫持久化:</b> 引入 MyBatis，將受眾名單與發送紀錄存入 MySQL。(建立中)<br>
-<br>
-<b> AI API 真正對接: </b>預計接入 Google Gemini 實現由 AI 生成針對不同客群的不同風格摘要。<br>
-<br>
-<b> 社群平台分享:</b> 預計實作 LinkedIn 與 Facebook 的 API 串接。<br>
-<br>
-<b> 進階點閱統計: </b>自建 Tracking Pixel 以統計郵件開啟率。<br>
+-[ ]  資料庫持久化:</b> 引入 MyBatis，將受眾名單與發送紀錄存入 MySQL。(建立中)<br>
+
+-[ ]  AI API 真正對接: </b>預計接入 Google Gemini 實現由 AI 生成針對不同客群的不同風格摘要。<br>
+
+-[ ]  社群平台分享:</b> 預計實作 LinkedIn 與 Facebook 的 API 串接。<br>
+
+-[ ]  進階點閱統計: </b>自建 Tracking Pixel 以統計郵件開啟率。<br>
 
 ## 📈 計畫變更說明
 
