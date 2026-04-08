@@ -32,9 +32,8 @@ function clearWorkflowState() {
     console.log("Clearing previous workflow state from localStorage...");
     localStorage.removeItem('loadingState');
     localStorage.removeItem('audienceSelection');
-    localStorage.removeItem('contentPage_state'); // Placeholder for content page
-    localStorage.removeItem('sharePage_state');   // Placeholder for share page
-    // Add any other workflow-related keys here as you create them
+    localStorage.removeItem('contentPage_state');
+    localStorage.removeItem('sharePage_state');
 }
 
 fileInput.addEventListener('click', function() {
@@ -84,7 +83,7 @@ fileInput.addEventListener('change', function(event) {
     formData.append('file', file);
     console.log("開始上傳...");
 
-    // 開始 fetch
+    //FileController
     fetch('http://localhost:8080/api/upload', {
         method: 'POST',
         body: formData
@@ -95,26 +94,25 @@ fileInput.addEventListener('change', function(event) {
             let data;
 
             if (contentType && contentType.includes("application/json")) {
-                data = await response.json(); // 是 JSON 就解析成 JSON
+                data = await response.json();
             } else {
-                data = { error: await response.text() }; // 不是 JSON 就包裝成物件
+                data = { error: await response.text() };
             }
 
-            // 1. 處理重複檔案 (409)
+            //處理重複檔案 (409)
             if (response.status === 409) {
                 alert("Wait! " + (data.error || "File already exists."));
                 throw new Error("Duplicate");
             }
 
-            // 2. 處理檔案過大 (413) 或 其他錯誤 (500)
+            //處理檔案過大 (413) 或 其他錯誤 (500)
             if (!response.ok) {
                 alert("Upload Failed: " + (data.error || "Unknown server error"));
                 throw new Error(data.error || "Server Error");
             }
-
-            // 3. 成功
             return data;
         })
+
         .then(data => {
             localStorage.setItem('pdfContent', data.text);
             localStorage.setItem('currentCampaignId', data.dbId);

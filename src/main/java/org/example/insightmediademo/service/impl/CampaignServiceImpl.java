@@ -12,26 +12,28 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class CampaignServiceImpl implements CampaignService {
 
-    // 注入 MyBatis Mapper
+    //注入 MyBatis Mapper
     @Autowired
     private CampaignMapper campaignMapper;
 
-    // --- 1. 計算指紋的功能 ---
+    //計算指紋的功能
     @Override
     public String generateFingerprint(String title, String content) {
         String preview = content.length() > 50 ? content.substring(0, 50) : content;
         return DigestUtils.md5DigestAsHex((title + preview).getBytes(StandardCharsets.UTF_8));
     }
 
-    // --- 2. 處理上傳時的檢查與存儲邏輯 ---
+    //處理上傳時的檢查與存儲邏輯
     @Override
     public Integer handleNewUpload(String title, String content) {
+        //如果大於 0，代表檔案重複
         String fp = generateFingerprint(title, content);
+        //CampaignMapper
         if (campaignMapper.countByFingerprint(fp) > 0) {
-            return -1; // 已存在
+            return -1;
         }
 
-        // 建立新物件並存入
+        //建立新物件並存入
         PromotionCampaign campaign = new PromotionCampaign();
         campaign.setFingerprint(fp);
         campaign.setTitle(title);
@@ -41,7 +43,7 @@ public class CampaignServiceImpl implements CampaignService {
         return campaign.getId();
     }
 
-    // --- 3. 更新後續資料 (網址、受眾、狀態) ---
+    //更新後續資料 (網址、受眾、狀態)
     @Override
     public void updateCampaignInfo(PromotionCampaign campaign) {
         campaignMapper.update(campaign);

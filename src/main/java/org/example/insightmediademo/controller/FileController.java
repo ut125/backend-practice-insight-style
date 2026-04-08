@@ -20,18 +20,20 @@ import java.util.Map;
 public class FileController {
 
     @Autowired
-    private CampaignService campaignService; // 這裡注入的是介面
+    //注入業務邏輯層 (Service)
+    private CampaignService campaignService;
 
+    //index.js
     @PostMapping("/upload")
     public ResponseEntity<?> uploadPDF(@RequestParam("file") MultipartFile file) {
         try {
-            // 1. 讀取 PDF 內容 (保留你原本的邏輯)
+            //取PDF內容
             PDDocument document = PDDocument.load(file.getInputStream());
             PDFTextStripper stripper = new PDFTextStripper();
             String text = stripper.getText(document);
             document.close();
 
-            // 2. 額外邏輯：抓取第一行作為標題 (為了存入資料庫)
+            //抓取第一行作為標題
             String title = "Untitled Document";
             if (text != null && !text.trim().isEmpty()) {
                 String[] lines = text.trim().split("\\r?\\n");
@@ -41,8 +43,8 @@ public class FileController {
                 }
             }
 
-            // 3. 呼叫 Service 處理去重與存儲
-            // handleNewUpload 會回傳生成的 ID，如果重複則回傳 -1
+            //呼叫 Service 處理去重與存儲
+            //CampaignServiceImpl
             Integer dbId = campaignService.handleNewUpload(title, text);
 
             if (dbId == -1) {
@@ -51,7 +53,7 @@ public class FileController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
             }
 
-            // 4.封裝結果回傳給前端 (改回傳 JSON，包含文字和資料庫 ID)
+            //封裝結果回傳給前端
             Map<String, Object> response = new HashMap<>();
             response.put("text", text);
             response.put("dbId", dbId);
@@ -74,7 +76,6 @@ public class FileController {
             campaign.setId(id);
             campaign.setOriginalUrl(url);
 
-            // 呼叫 Service 的 update
             campaignService.updateCampaignInfo(campaign);
 
             return ResponseEntity.ok("URL updated successfully");

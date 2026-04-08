@@ -1,22 +1,25 @@
+//EmailController
 document.addEventListener("DOMContentLoaded", function() {
+    //從localStorage拿取
     const audienceType = localStorage.getItem('audienceSelection') || "public";
     const finalContent = localStorage.getItem('finalContentForSharing') || "";
     const emailBody = document.getElementById("email-body");
     const inputTo = document.getElementById("input-to");
 
-    // --- 修正預覽受眾顯示 ---
+    //內容顯示
     if (emailBody) emailBody.innerHTML = finalContent;
-    if (inputTo) inputTo.value = `Target: ${audienceType} group`; // 這裡把 Placeholder 改成 Value
+    if (inputTo) inputTo.value = `Target: ${audienceType} group`;
 
-    // share_download.js 裡面的 Confirm 事件
+
     document.getElementById('confirm-button').addEventListener('click', async function() {
-        const confirmBtn = this; // 取得按鈕本人
+        const confirmBtn = this;
+        //勾選了哪些選項
         const isEmail = document.getElementById('check-email').checked;
         const isPdf = document.getElementById('check-pdf').checked;
         const finalContent = localStorage.getItem('finalContentForSharing') || "";
         const audienceType = localStorage.getItem('audienceSelection') || "public";
 
-        // 1. 文字變更為 Processing 並停用按鈕防止重複點擊
+
         confirmBtn.innerText = "Processing...";
         confirmBtn.disabled = true;
 
@@ -50,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Connection Error", e);
         }
 
-        // 2. 存入狀態並跳轉
         localStorage.setItem('emailStatus', emailStatus);
         localStorage.setItem('pdfStatus', pdfStatus);
         window.location.href = 'promotion_status.html';

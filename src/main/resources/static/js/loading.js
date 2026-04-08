@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // --- 核心改動：呼叫 Java API ---
+        //FileController
         startBtn.innerText = "Saving...";
         startBtn.disabled = true;
 
@@ -129,14 +129,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    id: currentCampaignId, // 傳送資料庫 ID
-                    url: targetUrl          // 傳送填寫的網址 (Private 則為空字串)
+                    id: currentCampaignId,
+                    url: targetUrl
                 })
             });
 
             if (resp.ok) {
-                saveState(); // 存下本地狀態
-                window.location.href = 'audience.html'; // 跳轉下一頁
+                saveState();
+                window.location.href = 'audience.html';
             } else {
                 alert("Failed to save to database. Please try again.");
             }

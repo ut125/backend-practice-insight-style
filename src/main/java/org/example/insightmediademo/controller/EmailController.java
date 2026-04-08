@@ -19,11 +19,10 @@ public class EmailController {
     @Autowired
     private JavaMailSender mailSender;
 
-    // 從 application.properties 讀取你設定的帳號
+    //application.properties
     @Value("${spring.mail.username}")
     private String senderEmail;
 
-    // 從配置檔讀取，若找不到則預設為空字串
     @Value("${app.audience.Policy:}")
     private String policyEmails;
 
@@ -46,7 +45,7 @@ public class EmailController {
         String audienceType = request.get("audience");
         String content = request.get("content");
 
-        // 根據受眾類型選擇對應的 Email 字串
+        //根據受眾類型選擇Email
         String targetEmails = switch (audienceType) {
             case "Policy" -> policyEmails;
             case "Industry" -> marketEmails;
@@ -59,9 +58,10 @@ public class EmailController {
             return ResponseEntity.status(400).body("Error: No recipients found.");
         }
 
-        // 將逗號分隔的字串轉為 List
+        //將EMAIL分開
         List<String> recipients = Arrays.asList(targetEmails.split(","));
 
+        //循環寄信
         try {
             for (String email : recipients) {
                 sendSingleEmail(email.trim(), content);
@@ -72,12 +72,11 @@ public class EmailController {
         }
     }
 
-    // 抽離出來的寄信邏輯
+    //寄信
     private void sendSingleEmail(String to, String content) throws Exception {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        // 使用讀取回來的變數，而不是寫死字串
         helper.setFrom(senderEmail);
         helper.setTo(to);
         helper.setSubject("來自 Insight Media 的分析報告");

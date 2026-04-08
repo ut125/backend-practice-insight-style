@@ -16,27 +16,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api") //定義此控制器下所有路徑的前綴。
 @CrossOrigin(origins = "*")
 public class ContentController {
 
-    @PostMapping("/generate_content")
+    @PostMapping("/generate_content")//限制只能用 HTTP POST 方法存取
+    //content.js拿到前端傳來的 PDF 文字
     public Map<String, Object> generateAllContent(@RequestBody Map<String, String> request) {
-        String pdfText = request.get("text"); // 拿到前端傳來的 PDF 文字
+        String pdfText = request.get("text");
 
         // 模擬針對 PDF 內容產出的版本
         String title = "無標題文件";
         if (pdfText != null && !pdfText.isEmpty()) {
-            // 先去掉開頭的空白，然後按換行符號分割
+
             String[] lines = pdfText.trim().split("\\r?\\n");
             if (lines.length > 0) {
-                title = lines[0].trim(); // 取第一行
-                // 如果第一行太長，再截斷
+                title = lines[0].trim();
                 if (title.length() > 50) title = title.substring(0, 50) + "...";
             }
         }
 
-        // 建立巢狀結構
+        //模擬AI產出 LLM 的 API!!後面要替換
         Map<String, String> summary = new HashMap<>();
         summary.put("A", "【摘要版 A】針對《" + title + "》的深入研究...");
         summary.put("B", "【摘要版 B】這份關於《" + title + "》的報告指出...");
@@ -49,45 +49,37 @@ public class ContentController {
         allContent.put("summary", summary);
         allContent.put("press", press);
 
-        return allContent; // Spring 會自動把它轉成你 JS 期待的 JSON 格式
+        return allContent;
     }
 
+    //share_download.js
     @PostMapping("/download-pdf")
     public void downloadPDF(@RequestBody Map<String, String> request, HttpServletResponse response) {
-        // 1. 獲取前端傳來的真正內容
+
         String content = request.get("content");
         if (content == null) content = "No content provided";
 
-        // 2. 過濾 HTML 標籤（OpenPDF 的 Paragraph 僅支援純文字）
         String plainText = content.replaceAll("<[^>]*>", "");
 
         try {
-            // 3. 設定 Response Header，告訴瀏覽器這是一個 PDF 檔案
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=Insight_Report.pdf");
 
-            // 4. 初始化 OpenPDF 的 Document
+            //建立文件物件 -> 連結輸出流（這裡指向瀏覽器） -> 打開文件
             Document document = new Document(PageSize.A4);
-
-            // 5. 將 Document 綁定到 Response 的輸出流
             PdfWriter.getInstance(document, response.getOutputStream());
-
-            // 6. 開始寫入內容
             document.open();
 
-            // 注意：OpenPDF 預設字體不支援中文。如果你的內容有中文，下載下來會是空白。
-            // 注意：這裡是指向 Windows 系統字體路徑。
-            // ",0" 代表取該字體集中的第一個字體
+            //字體
             BaseFont bfChinese = BaseFont.createFont("C:/Windows/Fonts/msjh.ttc,0", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-
-            // 設定字體：字體大小 12，正常
             Font fontTitle = new Font(bfChinese, 16, Font.BOLD);
             Font fontBody = new Font(bfChinese, 12, Font.NORMAL);
+
+            //寫入 PDF
             document.add(new Paragraph("Insight Media Analysis Report"));
             document.add(new Paragraph("--------------------------------------"));
             document.add(new Paragraph(plainText, fontBody));
 
-            // 7. 關閉 Document
             document.close();
 
         } catch (Exception e) {
@@ -95,5 +87,4 @@ public class ContentController {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     /* ==========================================================================
-       1. CONSTANTS & STATE
+       1. 資料初始化與後端對接
        ========================================================================== */
 
     const page = {
@@ -45,12 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const sessionId = localStorage.getItem('session_id');
+    const pdfText = localStorage.getItem('pdfContent');
     const audience = localStorage.getItem('audienceSelection');
-    let allContent = {}; // 保存所有内容
-    let contentType = 'summary';
-    let version = 'A';
+    //let allContent = {}; // 保存所有内容
+    //let contentType = 'summary';
+    //let version = 'A';
 
-    // 1. 页面加载时请求
+    //ContentController
+    //向 Java 後端請求資料
     async function fetchAllContent() {
         const pdfText = localStorage.getItem('pdfContent');
         if (!pdfText) {
@@ -73,15 +75,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (resp.ok) {
                 const data = await resp.json();
 
-                // --- 關鍵：統一更新 mockData ---
                 mockData = data;
 
-                // 預設選中 summary 和 A 版
+                //預設
                 state.type = 'summary';
                 state.version = 'A';
-
-                // 渲染 UI
                 updateSelectionViewUI();
+
             } else {
                 page.contentDisplay.innerHTML = '<span style="color:red;">後端錯誤</span>';
             }
@@ -94,13 +94,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const textColors = ['black', 'blue', 'green', '#E69900', 'red'];
     const highlightColors = ['transparent', 'lightblue', 'lightgreen', 'yellow', 'lightcoral'];
     let state = { type: 'summary', version: 'A' };
-    let mockData = {
+    /*let mockData = {
         summary: { A: `MVP 3: Automatically generate a summary article...`, B: `B-Version Summary...` },
         press: { A: `FOR IMMEDIATE RELEASE: (A-Version)...`, B: `FOR IMMEDIATE RELEASE: (B-Version)...` }
-    };
+    };*/
 
     /* ==========================================================================
-       2. CORE FUNCTIONS (State, UI, RTE)
+       2. 頁面狀態與渲染
        ========================================================================== */
 
     function loadState() {
@@ -118,18 +118,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateSelectionViewUI() {
         const { type, version } = state;
 
-        // 從 mockData 讀取
+        //從後端資料取出對應的內容
         const content = (mockData[type] && mockData[type][version]) ? mockData[type][version] : "無內容";
-        page.contentDisplay.innerHTML = content;
 
-        // 更新浮水印
+        //更新到 HTML 畫面上
+        page.contentDisplay.innerHTML = content;
         page.versionWatermark.textContent = `${version}-Version`;
 
-        // 更新按鈕高亮狀態
+        //更新按鈕高亮狀態
         page.versionA.classList.toggle('active', version === 'A');
         page.versionB.classList.toggle('active', version === 'B');
 
-        // 更新下拉選單文字
+        //更新下拉選單文字
         const selectedOption = page.selectItems.querySelector(`[data-value="${type}"]`);
         if (selectedOption) page.selectSelectedText.textContent = selectedOption.textContent;
     }
@@ -206,26 +206,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ==========================================================================
-       3. EVENT LISTENERS
+       3. 編輯器功能
        ========================================================================== */
 
     // --- Main View & Navigation ---
     page.editBtn.addEventListener('click', () => switchView('edit'));
     page.cancelBtn.addEventListener('click', () => switchView('select'));
     page.saveBtn.addEventListener('click', () => {
+
         mockData[state.type][state.version] = page.editableContent.innerHTML;
         saveState();
         updateSelectionViewUI();
         switchView('select');
     });
     page.continueBtn.addEventListener('click', () => {
-        // 確保所有狀態都已保存
         saveState();
 
-        // 將最終顯示的 HTML 內容存入 localStorage 以便下一頁使用
+        // 將最終顯示的HTML內容存入localStorage以便下一頁使用
         localStorage.setItem('finalContentForSharing', page.contentDisplay.innerHTML);
 
-        // 跳轉到分享頁面
         window.location.href = 'share_download.html';
     });
 
@@ -244,17 +243,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 版本 A 切換
+    //版本 A 切換
     page.versionA.addEventListener('click', () => {
         state.version = 'A';
         updateSelectionViewUI();
     });
 
-    // 版本 B 切換
+    //版本 B 切換
     page.versionB.addEventListener('click', () => {
         state.version = 'B';
         updateSelectionViewUI();
     });
+
     // --- Toolbar Direct Actions ---
     page.rteToolbar.addEventListener('mousedown', e => {
         const button = e.target.closest('.tool-btn');
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
     page.aiMenu.addEventListener('click', (e) => {
         const target = e.target.closest('[data-action]');
         if (target) {
-            // 修正3：為 AI 選單添加提示
+
             alert(`AI Action: '${target.dataset.action}' is a future feature!`);
             closeAllPalettes();
         }
@@ -387,7 +387,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loadState();
     updateSelectionViewUI(); // This now correctly shows summary-a on load
     generateColorBoxes(page.colorPalette, textColors, 'foreColor');
-    // 修正：使用 backColor 命令
     generateColorBoxes(page.highlightPalette, highlightColors, 'backColor');
 
     fetchAllContent();
@@ -421,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             });
 
-            // 這裡不要再 const data 了，因為上面 fetchAllContent 用過了或者會衝突
             const resultData = await resp.json();
             if (resp.ok) {
                 console.log(`Audience count: ${resultData.count || 'N/A'}`);
